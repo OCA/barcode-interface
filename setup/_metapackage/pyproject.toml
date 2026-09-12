@@ -1,0 +1,11 @@
+[project]
+name = "odoo-addons-oca-barcode-interface"
+version = "18.0.20260912.0"
+dependencies = [
+    "odoo-addon-barcode_scanner==18.0.*",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 18.0",
+]
