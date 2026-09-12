@@ -18,31 +18,73 @@ msgstr ""
 
 #. module: barcode_scanner
 #. odoo-javascript
+#: code:addons/barcode_scanner/static/src/js/api.esm.js:0
+msgid "An error occurred while calling the server."
+msgstr ""
+
+#. module: barcode_scanner
+#. odoo-javascript
+#: code:addons/barcode_scanner/static/src/js/api.esm.js:0
+msgid "An error occurred while creating records."
+msgstr ""
+
+#. module: barcode_scanner
+#. odoo-javascript
+#: code:addons/barcode_scanner/static/src/js/api.esm.js:0
+msgid "An error occurred while deleting records."
+msgstr ""
+
+#. module: barcode_scanner
+#. odoo-javascript
+#: code:addons/barcode_scanner/static/src/js/api.esm.js:0
+msgid "An error occurred while fetching data."
+msgstr ""
+
+#. module: barcode_scanner
+#. odoo-javascript
+#: code:addons/barcode_scanner/static/src/js/api.esm.js:0
+msgid "An error occurred while grouping data."
+msgstr ""
+
+#. module: barcode_scanner
+#. odoo-javascript
+#: code:addons/barcode_scanner/static/src/js/api.esm.js:0
+msgid "An error occurred while reading records."
+msgstr ""
+
+#. module: barcode_scanner
+#. odoo-javascript
+#: code:addons/barcode_scanner/static/src/js/api.esm.js:0
+msgid "An error occurred while saving records."
+msgstr ""
+
+#. module: barcode_scanner
+#. odoo-javascript
 #: code:addons/barcode_scanner/static/src/xml/barcode_scanner_templates.xml:0
 msgid "Avatar"
 msgstr "Avatar"
 
 #. module: barcode_scanner
 #. odoo-javascript
-#: code:addons/barcode_scanner/static/src/js/hooks/use_barcode_dispatcher.js:0
+#: code:addons/barcode_scanner/static/src/js/hooks/use_barcode_dispatcher.esm.js:0
 msgid "Barcode not recognized"
 msgstr "Código de barras no reconocido"
 
 #. module: barcode_scanner
 #. odoo-javascript
-#: code:addons/barcode_scanner/static/src/js/screens/main_screen.js:0
+#: code:addons/barcode_scanner/static/src/js/screens/main_screen.esm.js:0
 msgid "Good afternoon"
 msgstr "Buenas tardes"
 
 #. module: barcode_scanner
 #. odoo-javascript
-#: code:addons/barcode_scanner/static/src/js/screens/main_screen.js:0
+#: code:addons/barcode_scanner/static/src/js/screens/main_screen.esm.js:0
 msgid "Good evening"
 msgstr "Buenas noches"
 
 #. module: barcode_scanner
 #. odoo-javascript
-#: code:addons/barcode_scanner/static/src/js/screens/main_screen.js:0
+#: code:addons/barcode_scanner/static/src/js/screens/main_screen.esm.js:0
 msgid "Good morning"
 msgstr "Buenos días"
 
