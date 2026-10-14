@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
-<title>README.rst</title>
+<title>Barcode Scanner</title>
 <style type="text/css">
 
 /*
@@ -453,6 +453,15 @@ awaited when the app opens; one that fails is logged and skipped:</p>
 <span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">barcodeStartupTasks</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;barcode_scanner/js/registries&quot;</span><span class="p">;</span><span class="w">
 
 </span><span class="nx">barcodeStartupTasks</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s2">&quot;my_config&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">env</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">loadMyConfig</span><span class="p">(</span><span class="nx">env</span><span class="p">.</span><span class="nx">services</span><span class="p">.</span><span class="nx">orm</span><span class="p">));</span>
+</pre>
+<p>Read scans in a screen with the <tt class="docutils literal">useBarcodeHandler</tt> hook. The barcode
+service counts the components that do (<tt class="docutils literal">readers.count</tt>, reactive), so
+a scan source such as a camera button can offer itself only while a
+screen reads scans:</p>
+<pre class="code js literal-block">
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">useBarcodeHandler</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;barcode_scanner/js/hooks/use_barcode_handler.esm&quot;</span><span class="p">;</span><span class="w">
+
+</span><span class="nx">useBarcodeHandler</span><span class="p">({</span><span class="nx">onScan</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">barcode</span><span class="p">,</span><span class="w"> </span><span class="nx">parsed</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">onScan</span><span class="p">(</span><span class="nx">barcode</span><span class="p">,</span><span class="w"> </span><span class="nx">parsed</span><span class="p">)});</span>
 </pre>
 </div>
 <div class="section" id="bug-tracker">
