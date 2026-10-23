@@ -1,2 +1,3 @@
 manufacture
+stock-logistics-warehouse
 stock-logistics-workflow
