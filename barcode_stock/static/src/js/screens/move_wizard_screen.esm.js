@@ -127,6 +127,49 @@ export class MoveWizardScreen extends Component {
         return this.props.params?.pickingTypeCode === "incoming";
     }
 
+    /**
+     * Open a move reserved against a lot with that lot chosen, as Odoo's own
+     * barcode app does: the reservation already says which lot goes. A lot the
+     * scan carried, or the operator chose, still wins.
+     *
+     * @param {Object[]} moveLines the move's lines
+     * @param {Object[]} lots the lots offered
+     * @returns {Object[]} the lots offered, the reserved one among them
+     */
+    preselectReservedLot(moveLines, lots) {
+        const reservedLotId = this.reservedLotId(moveLines);
+        if (this.selectedLotIdNumber || !reservedLotId) {
+            return lots;
+        }
+        this.state.selectedLotId = String(reservedLotId);
+        const reservedLot = this.barcodeScannerState.lotsById[reservedLotId];
+        if (reservedLot && !lots.some((lot) => lot.id === reservedLotId)) {
+            return [reservedLot, ...lots];
+        }
+        return lots;
+    }
+
+    /**
+     * The lot the move's reservation says goes next: that of its first line
+     * reserved against a lot that still has something to pick. Outside
+     * receptions only, where Odoo reserves stock lot by lot, and only when the
+     * operation picks from existing lots.
+     *
+     * @param {Object[]} moveLines the move's lines
+     * @returns {Number|null} the lot's id, if any
+     */
+    reservedLotId(moveLines) {
+        if (this.isIncoming || !this.isTracked || !this.state.useExistingLots) {
+            return null;
+        }
+        const line = moveLines.find(
+            (moveLine) =>
+                moveLine.lot_id?.[0] &&
+                (Number(moveLine.quantity) || 0) > (Number(moveLine.qty_picked) || 0)
+        );
+        return line ? line.lot_id[0] : null;
+    }
+
     get isOutgoing() {
         return this.props.params?.pickingTypeCode === "outgoing";
     }
@@ -179,15 +222,37 @@ export class MoveWizardScreen extends Component {
         return true;
     }
 
+    /**
+     * What is left to pick here: of the lot chosen, while the reservation still
+     * holds some of it, so that a move reserved over several lots is completed
+     * lot by lot; otherwise of the whole move.
+     *
+     * @returns {Number} the quantity left to pick
+     */
+    get pickableQty() {
+        const lotId = this.selectedLotIdNumber;
+        const lotLeft = (this.state.moveLines || [])
+            .filter((line) => lotId && line.lot_id?.[0] === lotId)
+            .reduce(
+                (sum, line) =>
+                    sum + (Number(line.quantity) || 0) - (Number(line.qty_picked) || 0),
+                0
+            );
+        if (lotLeft > 0) {
+            return Math.min(lotLeft, this.remainingQty);
+        }
+        return this.remainingQty;
+    }
+
     get canFulfill() {
         if (this.isSerial) return false;
         // Shown while anything is still missing, including the last unit: the
         // shortcut disappearing at 1 reads as "nothing left to pick".
-        return this.remainingQty - (this.state.qtyPicked || 0) > 0;
+        return this.pickableQty - (this.state.qtyPicked || 0) > 0;
     }
 
     get fulfillIncrement() {
-        return Math.max(this.remainingQty - (this.state.qtyPicked || 0), 0);
+        return Math.max(this.pickableQty - (this.state.qtyPicked || 0), 0);
     }
 
     get isTracked() {
@@ -256,7 +321,7 @@ export class MoveWizardScreen extends Component {
         if (this.isSerial) {
             return _t("Serial-tracked products can only process one unit.");
         }
-        return `${this.remainingQty} ${_t("remaining to process")}`;
+        return `${this.pickableQty} ${_t("remaining to process")}`;
     }
 
     get confirmLabel() {
@@ -356,7 +421,7 @@ export class MoveWizardScreen extends Component {
 
     fulfillRemaining() {
         if (!this.canFulfill) return;
-        this.state.qtyPicked = this.remainingQty;
+        this.state.qtyPicked = this.pickableQty;
         this.state._lastInputSource = "tap";
         this.feedback.success({
             message: _t("Remaining quantity applied"),
@@ -498,6 +563,7 @@ export class MoveWizardScreen extends Component {
         this.state.move = move;
         this.state.moveLines = moveLines;
         this.state.tracking = product.tracking;
+        lots = this.preselectReservedLot(moveLines, lots);
 
         // Seed the editable locations from the move unless the operator already
         // picked one (preserved across the location-picker round-trip).
