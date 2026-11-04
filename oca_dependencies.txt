@@ -1,3 +1,4 @@
 manufacture
+stock-logistics-warehouse
 stock-logistics-workflow
 delivery-carrier
