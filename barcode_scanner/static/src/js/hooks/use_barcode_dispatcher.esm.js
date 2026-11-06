@@ -1,8 +1,10 @@
-import {useEnv} from "@odoo/owl";
+import {NotificationPlugin} from "@web/core/notifications/notification_plugin";
 import {_t} from "@web/core/l10n/translation";
-import {useService} from "@web/core/utils/hooks";
-import {useBarcodeHandler} from "@barcode_scanner/js/hooks/use_barcode_handler.esm";
 import {barcodeScanHandlers} from "@barcode_scanner/js/registries.esm";
+import {useBarcodeHandler} from "@barcode_scanner/js/hooks/use_barcode_handler.esm";
+import {useEnv} from "@web/owl2/utils";
+import {usePlugin} from "@odoo/owl";
+import {useService} from "@web/core/utils/hooks";
 
 /**
  * Runs a scanned barcode through the registered scan handlers, in `sequence`
@@ -16,7 +18,7 @@ export function useBarcodeDispatcher() {
     const env = useEnv();
     const api = useService("barcodeApi");
     const router = useService("barcodeRouter");
-    const notification = useService("notification");
+    const notification = usePlugin(NotificationPlugin);
 
     const notify = (message, options = {}) => notification.add(message, options);
 

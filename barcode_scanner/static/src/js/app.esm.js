@@ -1,4 +1,4 @@
-import {Component, onMounted, onWillStart, onWillUnmount, useState} from "@odoo/owl";
+import {Component, onMounted, onWillStart, onWillUnmount, proxy} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
 
@@ -13,9 +13,9 @@ import {
 export class BarcodeScannerApp extends Component {
     setup() {
         this.barcode = useService("barcodeScannerBarcode");
-        this.feedback = useState(useService("barcodeScannerFeedback"));
+        this.feedback = proxy(useService("barcodeScannerFeedback"));
         this.dialog = useService("dialog");
-        this.router = useState(useService("barcodeRouter"));
+        this.router = proxy(useService("barcodeRouter"));
         if (!this.router.currentRoute) {
             this.router.navigate("main");
         }

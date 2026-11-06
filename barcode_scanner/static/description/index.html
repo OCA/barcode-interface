@@ -374,7 +374,7 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:4249242d65a1e8e4c80c5bd74fb2a6ae6655b98c0282ca521bb7995d3c38b6a7
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/barcode-interface/tree/18.0/barcode_scanner"><img alt="OCA/barcode-interface" src="https://img.shields.io/badge/github-OCA%2Fbarcode--interface-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/barcode-interface-18-0/barcode-interface-18-0-barcode_scanner"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/barcode-interface&amp;target_branch=18.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/barcode-interface/tree/20.0/barcode_scanner"><img alt="OCA/barcode-interface" src="https://img.shields.io/badge/github-OCA%2Fbarcode--interface-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/barcode-interface-20-0/barcode-interface-20-0-barcode_scanner"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/barcode-interface&amp;target_branch=20.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>This module is the <strong>base framework</strong> of the Barcode suite: a fast,
 full-screen scanning application shell for Odoo that other modules
 extend.</p>
@@ -410,16 +410,24 @@ actual warehouse operations.</p>
 a feature module such as <tt class="docutils literal">barcode_stock</tt> to get actual operations.</p>
 <p>To build your own feature module, register your pieces into the
 framework registries — no change to the base module is required.</p>
-<p>Register a screen:</p>
+<p>Register a screen. Screens receive a <tt class="docutils literal">navigate</tt> function and the route
+<tt class="docutils literal">params</tt> (or what the optional <tt class="docutils literal">props(params)</tt> entry returns); with
+Owl 3 a component must declare the props it reads with <tt class="docutils literal">useProps</tt>:</p>
 <pre class="code js literal-block">
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">barcodeScreens</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;barcode_scanner/js/registries&quot;</span><span class="p">;</span><span class="w">
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">Component</span><span class="p">,</span><span class="w"> </span><span class="nx">useProps</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;odoo/owl&quot;</span><span class="p">;</span><span class="w">
+</span><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">barcodeScreens</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;barcode_scanner/js/registries.esm&quot;</span><span class="p">;</span><span class="w">
+
+</span><span class="kd">class</span><span class="w"> </span><span class="nx">MyScreen</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="k">static</span><span class="w"> </span><span class="nx">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_module.MyScreen&quot;</span><span class="p">;</span><span class="w">
+    </span><span class="nx">props</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useProps</span><span class="p">();</span><span class="w">
+</span><span class="p">}</span><span class="w">
 
 </span><span class="nx">barcodeScreens</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s2">&quot;my_screen&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">component</span><span class="o">:</span><span class="w"> </span><span class="nx">MyScreen</span><span class="p">});</span>
 </pre>
 <p>Register a scan handler (tried in <tt class="docutils literal">sequence</tt> order; the first that
 returns a truthy value consumes the scan):</p>
 <pre class="code js literal-block">
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">barcodeScanHandlers</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;barcode_scanner/js/registries&quot;</span><span class="p">;</span><span class="w">
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">barcodeScanHandlers</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;barcode_scanner/js/registries.esm&quot;</span><span class="p">;</span><span class="w">
 
 </span><span class="nx">barcodeScanHandlers</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s2">&quot;my_handler&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="k">async</span><span class="w"> </span><span class="nx">handle</span><span class="p">(</span><span class="nx">barcode</span><span class="p">,</span><span class="w"> </span><span class="nx">parsed</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">api</span><span class="p">,</span><span class="w"> </span><span class="nx">navigate</span><span class="p">,</span><span class="w"> </span><span class="nx">notify</span><span class="p">})</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -427,20 +435,22 @@ returns a truthy value consumes the scan):</p>
     </span><span class="p">},</span><span class="w">
 </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nx">sequence</span><span class="o">:</span><span class="w"> </span><span class="mf">50</span><span class="p">});</span>
 </pre>
-<p>Register a home-screen tile:</p>
+<p>Register a home-screen tile. <tt class="docutils literal">icon</tt> is a <a class="reference external" href="https://fonts.google.com/icons">Material
+Symbols</a> name, rendered as
+<tt class="docutils literal">&lt;i <span class="pre">class=&quot;oi&quot;</span> <span class="pre">data-icon=&quot;...&quot;/&gt;</span></tt>:</p>
 <pre class="code js literal-block">
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">barcodeMenuTiles</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;barcode_scanner/js/registries&quot;</span><span class="p">;</span><span class="w">
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">barcodeMenuTiles</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;barcode_scanner/js/registries.esm&quot;</span><span class="p">;</span><span class="w">
 
 </span><span class="nx">barcodeMenuTiles</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s2">&quot;my_tile&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;My Screen&quot;</span><span class="p">,</span><span class="w">
-    </span><span class="nx">icon</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;fa-cube&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="nx">icon</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;deployed_code&quot;</span><span class="p">,</span><span class="w">
     </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="p">({</span><span class="nx">navigate</span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">navigate</span><span class="p">(</span><span class="s2">&quot;my_screen&quot;</span><span class="p">),</span><span class="w">
 </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nx">sequence</span><span class="o">:</span><span class="w"> </span><span class="mf">50</span><span class="p">});</span>
 </pre>
 <p>Register a barcode parser (tried in <tt class="docutils literal">sequence</tt> order before the
 built-in EAN13 one; return <tt class="docutils literal">null</tt> to let the next parser try):</p>
 <pre class="code js literal-block">
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">barcodeParsers</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;barcode_scanner/js/registries&quot;</span><span class="p">;</span><span class="w">
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">barcodeParsers</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;barcode_scanner/js/registries.esm&quot;</span><span class="p">;</span><span class="w">
 
 </span><span class="nx">barcodeParsers</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s2">&quot;my_symbology&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">barcode</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="c1">// return {type: &quot;...&quot;, value: &quot;&lt;product code&gt;&quot;, ...} or null</span><span class="w">
@@ -450,7 +460,7 @@ built-in EAN13 one; return <tt class="docutils literal">null</tt> to let the nex
 scan (<tt class="docutils literal">barcode_gs1</tt> reads its nomenclature this way). Tasks are
 awaited when the app opens; one that fails is logged and skipped:</p>
 <pre class="code js literal-block">
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">barcodeStartupTasks</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;barcode_scanner/js/registries&quot;</span><span class="p">;</span><span class="w">
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">barcodeStartupTasks</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;barcode_scanner/js/registries.esm&quot;</span><span class="p">;</span><span class="w">
 
 </span><span class="nx">barcodeStartupTasks</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s2">&quot;my_config&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">env</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">loadMyConfig</span><span class="p">(</span><span class="nx">env</span><span class="p">.</span><span class="nx">services</span><span class="p">.</span><span class="nx">orm</span><span class="p">));</span>
 </pre>
@@ -463,13 +473,28 @@ screen reads scans:</p>
 
 </span><span class="nx">useBarcodeHandler</span><span class="p">({</span><span class="nx">onScan</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">barcode</span><span class="p">,</span><span class="w"> </span><span class="nx">parsed</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">onScan</span><span class="p">(</span><span class="nx">barcode</span><span class="p">,</span><span class="w"> </span><span class="nx">parsed</span><span class="p">)});</span>
 </pre>
+<p>Call the server through the <tt class="docutils literal">barcodeApi</tt> service (or the
+<tt class="docutils literal">useBarcodeScanner</tt> hook): it wraps the ORM and shows the server’s
+user-facing error message to the operator. Grouped reads follow Odoo’s
+<tt class="docutils literal">formattedReadGroup(model, domain, groupby, aggregates, options)</tt>:</p>
+<pre class="code js literal-block">
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">useBarcodeScanner</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;barcode_scanner/js/hooks/use_inventory.esm&quot;</span><span class="p">;</span><span class="w">
+
+</span><span class="kd">const</span><span class="w"> </span><span class="nx">api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useBarcodeScanner</span><span class="p">();</span><span class="w">
+</span><span class="kd">const</span><span class="w"> </span><span class="nx">groups</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">api</span><span class="p">.</span><span class="nx">formattedReadGroup</span><span class="p">(</span><span class="w">
+    </span><span class="s2">&quot;stock.quant&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="p">[[</span><span class="s2">&quot;location_id&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;=&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">locationId</span><span class="p">]],</span><span class="w">
+    </span><span class="p">[</span><span class="s2">&quot;product_id&quot;</span><span class="p">],</span><span class="w">
+    </span><span class="p">[</span><span class="s2">&quot;quantity:sum&quot;</span><span class="p">]</span><span class="w">
+</span><span class="p">);</span>
+</pre>
 </div>
 <div class="section" id="bug-tracker">
 <h2><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h2>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/barcode-interface/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/barcode-interface/issues/new?body=module:%20barcode_scanner%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/barcode-interface/issues/new?body=module:%20barcode_scanner%0Aversion:%2020.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -499,7 +524,7 @@ mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
 <p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainer</a>:</p>
 <p><a class="reference external image-reference" href="https://github.com/szalatyzuzanna"><img alt="szalatyzuzanna" src="https://github.com/szalatyzuzanna.png?size=40px" /></a></p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/barcode-interface/tree/18.0/barcode_scanner">OCA/barcode-interface</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/barcode-interface/tree/20.0/barcode_scanner">OCA/barcode-interface</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>

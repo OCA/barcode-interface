@@ -1,4 +1,4 @@
-import {Component, useState} from "@odoo/owl";
+import {Component, proxy} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
 import {useService} from "@web/core/utils/hooks";
 import {user} from "@web/core/user";
@@ -8,8 +8,8 @@ import {barcodeMenuTiles, barcodeScreens} from "@barcode_scanner/js/registries.e
 
 export class MainScreen extends Component {
     setup() {
-        this.store = useState(useService("barcodeStore"));
-        this.avatarState = useState({failed: false});
+        this.store = proxy(useService("barcodeStore"));
+        this.avatarState = proxy({failed: false});
         useBarcodeDispatcher();
     }
 
@@ -22,13 +22,18 @@ export class MainScreen extends Component {
     }
 
     get greeting() {
-        const tz = user.tz || "UTC";
-        const hour = new Intl.DateTimeFormat("en", {
-            hour: "numeric",
-            hour12: false,
-            timeZone: tz,
-        }).format(new Date());
-        const h = parseInt(hour, 10);
+        let h = new Date().getHours();
+        try {
+            const hour = new Intl.DateTimeFormat("en", {
+                hour: "numeric",
+                hour12: false,
+                timeZone: user.tz || "UTC",
+            }).format(new Date());
+            h = parseInt(hour, 10);
+        } catch {
+            // A time zone the browser does not know: keep the local hour
+            // rather than breaking the home screen.
+        }
         if (h < 12) return _t("Good morning");
         if (h < 18) return _t("Good afternoon");
         return _t("Good evening");

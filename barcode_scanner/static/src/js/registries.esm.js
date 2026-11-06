@@ -9,7 +9,9 @@ import {registry} from "@web/core/registry";
  * - barcode_scan_handlers: {handle(barcode, parsed, ctx)}; registered with a
  *   `sequence` option, tried in order until one returns a truthy value.
  * - barcode_menu_tiles: home-screen tiles {label, icon, iconClass, action(ctx)}
- *   registered with a `sequence` option.
+ *   registered with a `sequence` option; `icon` is a Material Symbols name.
+ * - barcode_screens components receive `navigate` plus the route params (or
+ *   what `props(routeParams)` returns): declare them with `useProps`.
  * - barcode_app_widgets: {component} overlay widgets rendered in the app shell
  *   (e.g. a floating action button); each renders itself and wires its own
  *   services.

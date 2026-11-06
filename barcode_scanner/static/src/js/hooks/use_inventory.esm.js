@@ -6,7 +6,7 @@ export function useBarcodeScanner() {
     return {
         call: api.call.bind(api),
         searchRead: api.searchRead.bind(api),
-        readGroup: api.readGroup.bind(api),
+        formattedReadGroup: api.formattedReadGroup.bind(api),
         read: api.read.bind(api),
         write: api.write.bind(api),
         create: api.create.bind(api),

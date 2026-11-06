@@ -21,13 +21,13 @@ Barcode Scanner
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fbarcode--interface-lightgray.png?logo=github
-    :target: https://github.com/OCA/barcode-interface/tree/18.0/barcode_scanner
+    :target: https://github.com/OCA/barcode-interface/tree/20.0/barcode_scanner
     :alt: OCA/barcode-interface
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/barcode-interface-18-0/barcode-interface-18-0-barcode_scanner
+    :target: https://translation.odoo-community.org/projects/barcode-interface-20-0/barcode-interface-20-0-barcode_scanner
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/barcode-interface&target_branch=18.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/barcode-interface&target_branch=20.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -64,11 +64,19 @@ a feature module such as ``barcode_stock`` to get actual operations.
 To build your own feature module, register your pieces into the
 framework registries — no change to the base module is required.
 
-Register a screen:
+Register a screen. Screens receive a ``navigate`` function and the route
+``params`` (or what the optional ``props(params)`` entry returns); with
+Owl 3 a component must declare the props it reads with ``useProps``:
 
 .. code:: js
 
-   import {barcodeScreens} from "@barcode_scanner/js/registries";
+   import {Component, useProps} from "@odoo/owl";
+   import {barcodeScreens} from "@barcode_scanner/js/registries.esm";
+
+   class MyScreen extends Component {
+       static template = "my_module.MyScreen";
+       props = useProps();
+   }
 
    barcodeScreens.add("my_screen", {component: MyScreen});
 
@@ -77,7 +85,7 @@ returns a truthy value consumes the scan):
 
 .. code:: js
 
-   import {barcodeScanHandlers} from "@barcode_scanner/js/registries";
+   import {barcodeScanHandlers} from "@barcode_scanner/js/registries.esm";
 
    barcodeScanHandlers.add("my_handler", {
        async handle(barcode, parsed, {api, navigate, notify}) {
@@ -85,15 +93,17 @@ returns a truthy value consumes the scan):
        },
    }, {sequence: 50});
 
-Register a home-screen tile:
+Register a home-screen tile. ``icon`` is a `Material
+Symbols <https://fonts.google.com/icons>`__ name, rendered as
+``<i class="oi" data-icon="..."/>``:
 
 .. code:: js
 
-   import {barcodeMenuTiles} from "@barcode_scanner/js/registries";
+   import {barcodeMenuTiles} from "@barcode_scanner/js/registries.esm";
 
    barcodeMenuTiles.add("my_tile", {
        label: "My Screen",
-       icon: "fa-cube",
+       icon: "deployed_code",
        action: ({navigate}) => navigate("my_screen"),
    }, {sequence: 50});
 
@@ -102,7 +112,7 @@ built-in EAN13 one; return ``null`` to let the next parser try):
 
 .. code:: js
 
-   import {barcodeParsers} from "@barcode_scanner/js/registries";
+   import {barcodeParsers} from "@barcode_scanner/js/registries.esm";
 
    barcodeParsers.add("my_symbology", (barcode) => {
        // return {type: "...", value: "<product code>", ...} or null
@@ -114,7 +124,7 @@ awaited when the app opens; one that fails is logged and skipped:
 
 .. code:: js
 
-   import {barcodeStartupTasks} from "@barcode_scanner/js/registries";
+   import {barcodeStartupTasks} from "@barcode_scanner/js/registries.esm";
 
    barcodeStartupTasks.add("my_config", (env) => loadMyConfig(env.services.orm));
 
@@ -129,13 +139,30 @@ screen reads scans:
 
    useBarcodeHandler({onScan: (barcode, parsed) => this.onScan(barcode, parsed)});
 
+Call the server through the ``barcodeApi`` service (or the
+``useBarcodeScanner`` hook): it wraps the ORM and shows the server's
+user-facing error message to the operator. Grouped reads follow Odoo's
+``formattedReadGroup(model, domain, groupby, aggregates, options)``:
+
+.. code:: js
+
+   import {useBarcodeScanner} from "@barcode_scanner/js/hooks/use_inventory.esm";
+
+   const api = useBarcodeScanner();
+   const groups = await api.formattedReadGroup(
+       "stock.quant",
+       [["location_id", "=", locationId]],
+       ["product_id"],
+       ["quantity:sum"]
+   );
+
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/barcode-interface/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/barcode-interface/issues/new?body=module:%20barcode_scanner%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/barcode-interface/issues/new?body=module:%20barcode_scanner%0Aversion:%2020.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -175,6 +202,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-szalatyzuzanna| 
 
-This module is part of the `OCA/barcode-interface <https://github.com/OCA/barcode-interface/tree/18.0/barcode_scanner>`_ project on GitHub.
+This module is part of the `OCA/barcode-interface <https://github.com/OCA/barcode-interface/tree/20.0/barcode_scanner>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

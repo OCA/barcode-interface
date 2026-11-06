@@ -54,9 +54,15 @@ export const barcodeApiService = {
                 }
             },
 
-            async readGroup(model, domain, fields, groupby, options = {}) {
+            async formattedReadGroup(model, domain, groupby, aggregates, options = {}) {
                 try {
-                    return await orm.readGroup(model, domain, fields, groupby, options);
+                    return await orm.formattedReadGroup(
+                        model,
+                        domain,
+                        groupby,
+                        aggregates,
+                        options
+                    );
                 } catch (error) {
                     const message = errorMessage(
                         error,
