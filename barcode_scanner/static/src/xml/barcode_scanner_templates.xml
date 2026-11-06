@@ -26,9 +26,9 @@
                     <div class="ilx-home-avatar">
                         <img
                             t-if="showAvatarImage"
+                            class="ilx-home-avatar-img"
                             t-att-src="avatarUrl"
                             t-on-error="onAvatarError"
-                            class="ilx-home-avatar-img"
                             alt="Avatar"
                         />
                         <span t-else="" class="ilx-home-avatar-text">
