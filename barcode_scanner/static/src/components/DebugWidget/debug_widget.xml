@@ -1,0 +1,30 @@
+<t t-name="barcode_scanner.DebugWidget">
+    <div t-if="isVisible" class="barcode-debug-widget">
+        <div
+            t-if="state.open"
+            class="barcode-debug-widget__panel d-flex gap-2 p-2 shadow rounded"
+        >
+            <input
+                t-model="state.input"
+                type="text"
+                class="form-control"
+                placeholder="Barcode"
+                t-on-keydown="onKeydown"
+            />
+            <button
+                type="button"
+                class="btn btn-primary"
+                t-on-click="simulateScan"
+            >Scan</button>
+        </div>
+        <button
+            type="button"
+            class="barcode-debug-widget__fab ilx-fab"
+            title="Debug"
+            aria-label="Debug"
+            t-on-click="toggle"
+        >
+            <i class="fa fa-bug" aria-hidden="true" />
+        </button>
+    </div>
+</t>
