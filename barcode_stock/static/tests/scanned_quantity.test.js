@@ -1,5 +1,5 @@
 import {describe, expect, test} from "@odoo/hoot";
-import {BarcodeScannerState} from "@barcode_stock/js/services/barcode_scanner_state.esm";
+import {BarcodeScannerState} from "@barcode_stock/services/barcode_scanner_state.esm";
 
 describe("BarcodeStock", () => {
     test("a scan counts as one unit unless the barcode states a quantity", () => {

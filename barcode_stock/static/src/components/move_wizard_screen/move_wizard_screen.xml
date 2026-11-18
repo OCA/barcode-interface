@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_scanner.MoveWizardScreen">
+        <div class="ilx-v2-screen">
+            <t t-if="state.loading">
+                <div class="text-center p-4">Loading move...</div>
+            </t>
+            <t t-else="">
+                <header class="ilx-mw-v2-header">
+                    <button class="ilx-v2-back-btn ilx-btn-48" t-on-click="goBack">
+                        <i class="fa fa-arrow-left" />
+                    </button>
+                    <h2 class="ilx-mw-v2-title">
+                        <t t-esc="state.move?.product_id?.[1]" />
+                    </h2>
+                    <button class="ilx-v2-back-btn ilx-btn-48 invisible">
+                        <i class="fa fa-ellipsis-v" />
+                    </button>
+                </header>
+
+                <div class="ilx-mw-v2-main">
+                    <div class="ilx-mw-v2-card">
+                        <div class="ilx-mw-v2-task-top">
+                            <div>
+                                <span class="ilx-mw-v2-eyebrow">TASK STATUS</span>
+                                <h3 class="ilx-mw-v2-task-title">Move Operation</h3>
+                                <div
+                                    style="font-size: 0.875rem; color: var(--ilx-on-surface-variant, #6b7280); margin-top: 2px;"
+                                >
+                                    <i class="fa fa-cube" />
+                                    <t t-esc="state.move?.product_id?.[1]" />
+                                </div>
+                            </div>
+                            <div class="ilx-mw-v2-badge-todo">
+                                <i class="fa fa-clipboard" /> TO DO
+                            </div>
+                        </div>
+                        <div class="ilx-mw-v2-progress-bg">
+                            <div
+                                class="ilx-mw-v2-progress-fill"
+                                t-att-style="'width: ' + (demandQty > 0 ? (doneQty / demandQty) * 100 : 0) + '%'"
+                            />
+                        </div>
+                        <div class="ilx-mw-v2-progress-labels">
+                            <span><t t-esc="doneQty" /> Picked</span>
+                            <span>
+                                <strong><t t-esc="demandQty" /> Required</strong>
+                            </span>
+                        </div>
+                    </div>
+
+                    <t
+                        t-if="hasLotGroup and isTracked and (canUseExistingLot or canCreateLot)"
+                    >
+                        <div
+                            t-if="canUseExistingLot and canCreateLot"
+                            class="ilx-mw-v2-segmented"
+                        >
+                            <button
+                                t-att-class="state.mode === 'pick' ? 'ilx-mw-v2-segment-btn active' : 'ilx-mw-v2-segment-btn'"
+                                t-on-click="() => setMode('pick')"
+                            >
+                                Pick Existing Lot
+                            </button>
+                            <button
+                                t-att-class="state.mode === 'create_lot' ? 'ilx-mw-v2-segment-btn active' : 'ilx-mw-v2-segment-btn'"
+                                t-on-click="() => setMode('create_lot')"
+                            >
+                                Create New Lot
+                            </button>
+                        </div>
+
+                        <div class="ilx-v2-field-group">
+                            <label class="ilx-v2-label">
+                                <t t-esc="lotFieldLabel" />
+                            </label>
+                            <t t-if="canUseExistingLot and state.mode === 'pick'">
+                                <div class="ilx-mw-v2-input-box">
+                                    <i class="fa fa-barcode ilx-mw-v2-input-icon" />
+                                    <select
+                                        name="lot_id"
+                                        class="ilx-mw-v2-input"
+                                        t-on-change="onLotChange"
+                                    >
+                                        <option
+                                            value=""
+                                            t-att-selected="!selectedLotIdNumber"
+                                        >Select lot</option>
+                                        <t
+                                            t-foreach="realLots"
+                                            t-as="lot"
+                                            t-key="lot.id"
+                                        >
+                                            <option
+                                                t-att-value="lot.id"
+                                                t-att-selected="lot.id === selectedLotIdNumber"
+                                            >
+                                                <t t-esc="lot.name" />
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div
+                                    t-if="missingLotMessage"
+                                    class="text-danger small mt-1"
+                                    role="alert"
+                                >
+                                    <i class="fa fa-exclamation-triangle me-1" />
+                                    <t t-esc="missingLotMessage" />
+                                </div>
+                            </t>
+                            <t t-if="canCreateLot and state.mode === 'create_lot'">
+                                <div class="ilx-mw-v2-input-box mb-2">
+                                    <i class="fa fa-barcode ilx-mw-v2-input-icon" />
+                                    <input
+                                        name="new_lot_name"
+                                        class="ilx-mw-v2-input"
+                                        t-model="state.newLotName"
+                                        placeholder="Enter lot/serial"
+                                        data-enable-barcode="true"
+                                    />
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+
+                    <div class="ilx-v2-field-group">
+                        <label class="ilx-v2-label">Quantity to pick</label>
+                        <div
+                            class="ilx-mw-v2-qty-row"
+                            role="group"
+                            aria-label="Quantity stepper"
+                        >
+                            <button
+                                class="ilx-mw-v2-qty-btn"
+                                t-att-disabled="!canDecrement or state.loading"
+                                t-att-aria-label="'Decrease quantity by one'"
+                                t-on-click="() => this.adjustQty(-1)"
+                            >
+                                <i class="fa fa-minus" />
+                            </button>
+                            <input
+                                class="ilx-mw-v2-qty-input"
+                                type="number"
+                                t-model="state.qtyPicked"
+                                t-att-max="quantityInputMax"
+                                t-att-aria-label="'Quantity'"
+                                t-on-change="(ev) => this.setQty(ev.target.value)"
+                                data-enable-barcode="true"
+                            />
+                            <button
+                                class="ilx-mw-v2-qty-btn"
+                                t-att-disabled="!canIncrement or state.loading"
+                                t-att-aria-label="'Increase quantity by one'"
+                                t-on-click="() => this.adjustQty(1)"
+                            >
+                                <i class="fa fa-plus" />
+                            </button>
+                            <button
+                                t-if="canFulfill"
+                                class="ilx-mw-v2-qty-btn ilx-mw-v2-qty-btn--fulfill"
+                                t-att-aria-label="'Fulfill remaining'"
+                                t-on-click="fulfillRemaining"
+                            >
+                                +<t t-esc="fulfillIncrement" />
+                            </button>
+                        </div>
+                    </div>
+
+                    <t t-if="canEditLocations">
+                        <div class="ilx-v2-field-group">
+                            <label class="ilx-v2-label">Source location</label>
+                            <div
+                                class="ilx-tx-v2-select-card"
+                                t-on-click="selectSourceLocation"
+                            >
+                                <div class="ilx-tx-v2-icon">
+                                    <i class="fa fa-map-marker" />
+                                </div>
+                                <div class="ilx-tx-v2-text">
+                                    <t t-if="shownSourceLocation">
+                                        <t t-esc="shownSourceLocation.display_name" />
+                                    </t>
+                                    <t t-else="">Select source</t>
+                                </div>
+                                <div class="ilx-tx-v2-chevron">
+                                    <i class="fa fa-chevron-down" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ilx-v2-field-group">
+                            <label class="ilx-v2-label">Destination location</label>
+                            <div
+                                class="ilx-tx-v2-select-card"
+                                t-on-click="selectDestLocation"
+                            >
+                                <div class="ilx-tx-v2-icon">
+                                    <i class="fa fa-sign-in" />
+                                </div>
+                                <div class="ilx-tx-v2-text">
+                                    <t t-if="shownDestLocation">
+                                        <t t-esc="shownDestLocation.display_name" />
+                                    </t>
+                                    <t t-else="">Select destination</t>
+                                </div>
+                                <div class="ilx-tx-v2-chevron">
+                                    <i class="fa fa-chevron-down" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+
+                <footer class="ilx-v2-footer">
+                    <button class="ilx-v2-btn-primary" t-on-click="confirmPick">
+                        <t t-esc="confirmLabel" />
+                        <i class="fa fa-arrow-right ms-2" />
+                    </button>
+                    <button class="ilx-v2-btn-secondary" t-on-click="goBack">
+                        <t t-esc="backLabel" />
+                    </button>
+                </footer>
+            </t>
+        </div>
+    </t>
+</templates>

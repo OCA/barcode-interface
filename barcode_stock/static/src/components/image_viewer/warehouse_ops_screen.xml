@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_scanner.ImageViewer" owl="1">
+        <div class="image-viewer-overlay">
+            <div
+                class="image-viewer"
+                t-on-touchstart="onTouchStart"
+                t-on-touchend="onTouchEnd"
+            >
+                <button class="close-btn close-img" t-on-click="props.onClose">
+                    &#10005;
+                </button>
+                <button
+                    class="delete-photo-btn"
+                    title="Delete picture"
+                    t-on-click="deleteImage"
+                >
+                    <i class="fa fa-trash" />
+                </button>
+                <button class="nav nav-img prev" t-on-click="prevImage">
+                    &#8249;
+                </button>
+                <t t-if="currentImageSrc">
+                    <img t-att-src="currentImageSrc" alt="Picking attachment" />
+                </t>
+                <button class="nav nav-img next" t-on-click="nextImage">
+                    &#8250;
+                </button>
+            </div>
+        </div>
+    </t>
+</templates>

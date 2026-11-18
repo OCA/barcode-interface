@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, test} from "@odoo/hoot";
-import {PickingListScreen} from "@barcode_stock/js/screens/picking_list_screen.esm";
+import {PickingListScreen} from "@barcode_stock/components/picking_list_screen/picking_list_screen.esm";
 import {patchTranslations} from "@web/../tests/web_test_helpers";
 
 /**

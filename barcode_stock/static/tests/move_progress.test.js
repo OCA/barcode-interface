@@ -1,5 +1,5 @@
 import {describe, expect, test} from "@odoo/hoot";
-import {isMovePending, tabForMove} from "@barcode_stock/js/utils/move_progress.esm";
+import {isMovePending, tabForMove} from "@barcode_stock/utils/move_progress.esm";
 
 describe("BarcodeStock", () => {
     test("a move is pending until the picked quantity reaches the reserved one", () => {

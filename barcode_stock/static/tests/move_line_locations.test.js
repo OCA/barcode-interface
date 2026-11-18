@@ -1,8 +1,8 @@
 import {beforeEach, describe, expect, test} from "@odoo/hoot";
-import {BarcodeScannerState} from "@barcode_stock/js/services/barcode_scanner_state.esm";
-import {BarcodeScannerSync} from "@barcode_stock/js/services/barcode_scanner_sync.esm";
-import {MoveWizardScreen} from "@barcode_stock/js/screens/move_wizard_screen.esm";
-import {PickingScreen} from "@barcode_stock/js/screens/picking_screen.esm";
+import {BarcodeScannerState} from "@barcode_stock/services/barcode_scanner_state.esm";
+import {BarcodeScannerSync} from "@barcode_stock/services/barcode_scanner_sync.esm";
+import {MoveWizardScreen} from "@barcode_stock/components/move_wizard_screen/move_wizard_screen.esm";
+import {PickingScreen} from "@barcode_stock/components/picking_screen/picking_screen.esm";
 import {patchTranslations} from "@web/../tests/web_test_helpers";
 
 const STOCK = [8, "WH/Stock"];

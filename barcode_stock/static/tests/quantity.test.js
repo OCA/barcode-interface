@@ -1,10 +1,10 @@
 import {afterEach, describe, expect, test} from "@odoo/hoot";
-import {roundQty, setQuantityDecimals} from "@barcode_stock/js/utils/quantity.esm";
-import {BarcodeScannerState} from "@barcode_stock/js/services/barcode_scanner_state.esm";
-import {InternalTransferScreen} from "@barcode_stock/js/screens/internal_transfer_screen.esm";
-import {MoveWizardScreen} from "@barcode_stock/js/screens/move_wizard_screen.esm";
-import {PickingScreen} from "@barcode_stock/js/screens/picking_screen.esm";
-import {barcodeStartupTasks} from "@barcode_scanner/js/registries.esm";
+import {roundQty, setQuantityDecimals} from "@barcode_stock/utils/quantity.esm";
+import {BarcodeScannerState} from "@barcode_stock/services/barcode_scanner_state.esm";
+import {InternalTransferScreen} from "@barcode_stock/components/internal_transfer_screen/internal_transfer_screen.esm";
+import {MoveWizardScreen} from "@barcode_stock/components/move_wizard_screen/move_wizard_screen.esm";
+import {PickingScreen} from "@barcode_stock/components/picking_screen/picking_screen.esm";
+import {barcodeStartupTasks} from "@barcode_scanner/registries.esm";
 
 /**
  * A reception's move wizard on a move of `demand`, with `remaining` left of it

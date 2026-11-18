@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_scanner.ProductSelectorScreen">
+        <div class="ilx-emp-v2-screen">
+            <header class="ilx-emp-v2-header">
+                <button class="ilx-emp-v2-back-btn" t-on-click="goBack">
+                    <i class="fa fa-arrow-left" />
+                </button>
+                <h1 class="ilx-emp-v2-header-title">Select Product</h1>
+                <div style="width: 48px;" />
+            </header>
+
+            <main class="ilx-emp-v2-main">
+                <div class="ilx-emp-v2-search-box">
+                    <i class="fa fa-search ilx-emp-v2-search-icon" />
+                    <input
+                        type="text"
+                        class="ilx-emp-v2-search-input"
+                        placeholder="Search by name or SKU..."
+                        t-model="state.search"
+                    />
+                </div>
+
+                <h2 class="ilx-emp-v2-section-title">AVAILABLE PRODUCTS</h2>
+                <div class="ilx-emp-v2-list">
+                    <t t-if="state.loading">
+                        <div class="text-center p-4">Loading products...</div>
+                    </t>
+                    <t t-else="">
+                        <t
+                            t-foreach="filteredProducts"
+                            t-as="product"
+                            t-key="product.id"
+                        >
+                            <div
+                                t-att-class="state.selectedProduct?.id === product.id ? 'ilx-emp-v2-card selected' : 'ilx-emp-v2-card'"
+                                t-on-click="() => this.selectProduct(product)"
+                            >
+                                <div class="ilx-emp-v2-avatar-wrapper">
+                                    <div class="ilx-emp-v2-avatar">
+                                        <t t-if="product.image_url">
+                                            <img
+                                                t-att-src="product.image_url"
+                                                t-on-error="() => this.onImageError(product)"
+                                            />
+                                        </t>
+                                        <t t-else="">
+                                            <div class="ilx-emp-v2-avatar-placeholder">
+                                                <t
+                                                    t-esc="product.name.charAt(0).toUpperCase()"
+                                                />
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="ilx-emp-v2-info">
+                                    <span class="ilx-emp-v2-name">
+                                        <t t-esc="product.name" />
+                                    </span>
+                                    <span class="ilx-emp-v2-role">
+                                        <t t-esc="product.default_code || 'No SKU'" />
+                                        <span class="ilx-emp-v2-dot-sep">•</span>
+                                        $<t
+                                        t-esc="product.standard_price ? product.standard_price.toFixed(2) : '0.00'"
+                                    />
+                                    </span>
+                                </div>
+                                <div class="ilx-emp-v2-status">
+                                    <t t-if="state.selectedProduct?.id === product.id">
+                                        <i
+                                            class="fa fa-check-circle ilx-emp-v2-icon-selected"
+                                        />
+                                    </t>
+                                    <t t-else="">
+                                        <i
+                                            class="fa fa-chevron-right ilx-emp-v2-icon-chevron"
+                                        />
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                        <div
+                            t-if="filteredProducts.length === 0"
+                            class="text-center p-4"
+                            style="color: #666;"
+                        >No products found.</div>
+                    </t>
+                </div>
+            </main>
+
+            <div
+                t-if="state.selectedProduct and props.params?.mode !== 'quick_info_product'"
+                style="padding: 0 1rem; margin-bottom: 0.5rem;"
+            >
+                <div class="ilx-mw-v2-qty-row" style="justify-content: center;">
+                    <button class="ilx-mw-v2-qty-btn" t-on-click="decrementQty">
+                        <i class="fa fa-minus" />
+                    </button>
+                    <input
+                        type="number"
+                        class="ilx-mw-v2-qty-input"
+                        t-att-value="state.qty"
+                        t-on-input="onQtyInput"
+                        min="1"
+                        style="max-width: 80px;"
+                    />
+                    <button class="ilx-mw-v2-qty-btn" t-on-click="incrementQty">
+                        <i class="fa fa-plus" />
+                    </button>
+                    <span
+                        style="font-size: 0.85rem; color: var(--ilx-on-surface-variant); font-weight: 500;"
+                    >UNITS</span>
+                </div>
+            </div>
+
+            <footer class="ilx-emp-v2-footer">
+                <button
+                    class="ilx-emp-v2-confirm-btn"
+                    t-on-click="confirmSelection"
+                    t-att-disabled="!state.selectedProduct"
+                    t-att-style="!state.selectedProduct ? 'opacity: 0.5; cursor: not-allowed;' : ''"
+                >
+                    Confirm Product
+                </button>
+            </footer>
+        </div>
+    </t>
+</templates>

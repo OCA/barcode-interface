@@ -1,5 +1,5 @@
 import {describe, expect, test} from "@odoo/hoot";
-import {BarcodeScannerState} from "@barcode_stock/js/services/barcode_scanner_state.esm";
+import {BarcodeScannerState} from "@barcode_stock/services/barcode_scanner_state.esm";
 
 /**
  * Record every model the preload touches, answering just enough for it to

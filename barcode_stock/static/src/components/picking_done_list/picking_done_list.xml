@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_scanner.PickingDoneList" owl="1">
+        <t t-if="doneLines.length">
+            <t t-foreach="doneLines" t-as="line" t-key="line.id">
+                <PickingDoneCard
+                    line="line"
+                    highlighted="props.highlightedMoveId === line.move_id[0]"
+                    onDelete="props.onDeleteLine"
+                />
+            </t>
+        </t>
+        <t t-else="">
+            <div
+                class="ilx-kw-cta-banner"
+                style="background: var(--ilx-surface-container-low);"
+            >
+                <i
+                    class="fa fa-inbox ilx-kw-cta-icon"
+                    style="color: var(--ilx-on-surface-variant);"
+                />
+                <div class="ilx-kw-cta-text">
+                    <strong
+                        style="color: var(--ilx-on-surface);"
+                    >No confirmed scans yet</strong>
+                    <span
+                        style="color: var(--ilx-on-surface-variant);"
+                    >Process products from the To Do tab to build the done log here.</span>
+                </div>
+            </div>
+        </t>
+    </t>
+</templates>

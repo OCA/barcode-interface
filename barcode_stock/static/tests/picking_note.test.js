@@ -1,5 +1,5 @@
 import {describe, expect, test} from "@odoo/hoot";
-import {PickingInfoTab} from "@barcode_stock/js/components/picking_info_tab.esm";
+import {PickingInfoTab} from "@barcode_stock/components/picking_info_tab/picking_info_tab.esm";
 
 describe("BarcodeStock", () => {
     test("a typed note is escaped before it is stored as HTML", () => {

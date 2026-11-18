@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_scanner.PickingScreen">
+        <div class="ilx-kw-screen ilx-kw-picking-screen bg-surface-low">
+            <t t-if="!state.picking">
+                <div class="text-center p-4">
+                    Loading...
+                </div>
+            </t>
+            <t t-else="">
+                <header class="ilx-kw-header ilx-kw-header--elevated">
+                    <div class="ilx-kw-header-left">
+                        <button
+                            class="ilx-kw-icon-btn color-primary-container"
+                            t-on-click="goBack"
+                        >
+                            <i class="fa fa-arrow-left" />
+                        </button>
+                        <h1 class="ilx-kw-header-title color-on-surface">
+                            <t t-esc="state.picking.name" />
+                        </h1>
+                    </div>
+                </header>
+
+                <div class="ilx-kw-tabs bg-surface-lowest">
+                    <button
+                        t-att-class="state.activeTab === 'info' ? 'ilx-kw-tab active' : 'ilx-kw-tab'"
+                        t-on-click="() => setTab('info')"
+                    >
+                        <i class="fa fa-info-circle me-1" /> Information
+                        <div
+                        t-if="state.activeTab === 'info'"
+                        class="ilx-kw-tab-indicator"
+                    />
+                    </button>
+                    <button
+                        t-att-class="state.activeTab === 'todo' ? 'ilx-kw-tab active' : 'ilx-kw-tab'"
+                        t-on-click="() => setTab('todo')"
+                    >
+                        <i class="fa fa-list me-1" /> To Do
+                        <div
+                        t-if="state.activeTab === 'todo'"
+                        class="ilx-kw-tab-indicator"
+                    />
+                    </button>
+                    <button
+                        t-att-class="state.activeTab === 'done' ? 'ilx-kw-tab active' : 'ilx-kw-tab'"
+                        t-on-click="() => setTab('done')"
+                    >
+                        <i class="fa fa-check-circle me-1" /> Done
+                        <div
+                        t-if="state.activeTab === 'done'"
+                        class="ilx-kw-tab-indicator"
+                    />
+                    </button>
+                </div>
+
+                <main class="ilx-kw-main ilx-kw-tab-content mt-3">
+                    <t t-if="state.activeTab === 'info'">
+                        <PickingInfoTab
+                            picking="state.picking"
+                            pickingTypeCode="state.pickingTypeCode"
+                            progressLabel="progressLabel"
+                            onSelectResponsible="selectResponsible"
+                        />
+                    </t>
+                    <t t-if="state.activeTab === 'todo'">
+                        <PickingMoveList
+                            moves="state.moves"
+                            moveLines="state.moveLines"
+                            moveStatsById="moveStatsById"
+                            highlightedMoveId="state.highlightedMoveId"
+                            onOpenWizard="openMoveWizard"
+                        />
+                    </t>
+                    <t t-if="state.activeTab === 'done'">
+                        <PickingDoneList
+                            lines="state.moveLines"
+                            highlightedMoveId="state.highlightedMoveId"
+                            onDeleteLine="deleteMoveLine"
+                        />
+                    </t>
+                    <div class="ilx-kw-main-spacer" />
+                </main>
+
+                <div class="ilx-kw-bottom-nav">
+                    <button
+                        class="ilx-kw-nav-item flex-1"
+                        t-on-click="savePicking"
+                        t-att-disabled="state.isSaving"
+                    >
+                        <div class="ilx-kw-nav-pill">
+                            <i class="fa fa-save" />
+                        </div>
+                        <span>SAVE</span>
+                    </button>
+
+                    <button
+                        class="ilx-kw-nav-item active flex-1"
+                        t-on-click="validatePicking"
+                        t-att-disabled="state.isValidating"
+                    >
+                        <div class="ilx-kw-nav-pill">
+                            <i class="fa fa-check-circle" />
+                        </div>
+                        <span>VALIDATE</span>
+                    </button>
+
+                    <button
+                        class="ilx-kw-nav-item flex-1"
+                        t-on-click="cancelReservation"
+                        t-if="pendingMovesCount > 0"
+                        t-att-disabled="state.isValidating"
+                    >
+                        <div class="ilx-kw-nav-pill">
+                            <i class="fa fa-times" />
+                        </div>
+                        <span>Cancel reservation</span>
+                    </button>
+
+                    <button
+                        class="ilx-kw-nav-item flex-1"
+                        t-if="pendingMovesCount == 0"
+                        t-on-click="checkAvailability"
+                        t-att-disabled="state.isValidating"
+                    >
+                        <div class="ilx-kw-nav-pill">
+                            <i class="fa fa-refresh" />
+                        </div>
+                        <span>AVAILABILITY</span>
+                    </button>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>
