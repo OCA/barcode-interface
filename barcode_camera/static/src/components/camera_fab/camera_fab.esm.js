@@ -1,6 +1,6 @@
 import {Component, useState} from "@odoo/owl";
 import {BarcodeDialog} from "@web/core/barcode/barcode_dialog";
-import {barcodeAppWidgets} from "@barcode_scanner/js/registries.esm";
+import {barcodeAppWidgets} from "@barcode_scanner/registries.esm";
 import {isBarcodeScannerSupported} from "@web/core/barcode/barcode_video_scanner";
 import {useService} from "@web/core/utils/hooks";
 
