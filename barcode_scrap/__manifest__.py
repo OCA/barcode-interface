@@ -12,19 +12,13 @@
         "stock",
     ],
     "assets": {
-        "web.assets_backend": [
-            "barcode_scrap/static/src/scss/scrap.scss",
-            "barcode_scrap/static/src/xml/scrap_templates.xml",
-            "barcode_scrap/static/src/js/screens/scrap_location_screen.esm.js",
-            "barcode_scrap/static/src/js/screens/scrap_product_selector_screen.esm.js",
-            "barcode_scrap/static/src/js/screens/scrap_screen.esm.js",
-            "barcode_scrap/static/src/js/tiles/scrap_menu_tiles.esm.js",
+        "barcode_scanner.assets": [
+            "barcode_scrap/static/src/**/*.esm.js",
+            "barcode_scrap/static/src/**/*.xml",
+            "barcode_scrap/static/src/**/*.scss",
         ],
         "web.assets_unit_tests": [
             "barcode_scrap/static/tests/**/*",
         ],
     },
-    "installable": True,
-    "application": False,
-    "auto_install": False,
 }

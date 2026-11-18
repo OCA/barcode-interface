@@ -1,10 +1,10 @@
-import {beforeEach, describe, expect, test} from "@odoo/hoot";
-import {makeMockEnv, patchTranslations} from "@web/../tests/web_test_helpers";
 import {
     SCRAPPABLE_PRODUCTS,
     ScrapScreen,
-} from "@barcode_scrap/js/screens/scrap_screen.esm";
-import {ScrapProductSelectorScreen} from "@barcode_scrap/js/screens/scrap_product_selector_screen.esm";
+} from "@barcode_scrap/components/scrap_screen/scrap_screen.esm";
+import {beforeEach, describe, expect, test} from "@odoo/hoot";
+import {makeMockEnv, patchTranslations} from "@web/../tests/web_test_helpers";
+import {ScrapProductSelectorScreen} from "@barcode_scrap/components/scrap_product_selector_screen/scrap_product_selector_screen.esm";
 
 const UNTRACKED = {
     id: 7,
