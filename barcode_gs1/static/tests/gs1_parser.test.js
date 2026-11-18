@@ -1,15 +1,15 @@
 /** @odoo-module **/
 
 import {afterEach, describe, expect, test} from "@odoo/hoot";
-import {gtinVariants, isGS1Barcode, parseGs1} from "@barcode_gs1/js/gs1_parser.esm";
+import {gtinVariants, isGS1Barcode, parseGs1} from "@barcode_gs1/utils/gs1_parser.esm";
 import {
     compileGs1Nomenclature,
     getGs1Nomenclature,
     hasValidCheckDigit,
     loadGs1Nomenclature,
     setGs1Nomenclature,
-} from "@barcode_gs1/js/gs1_nomenclature.esm";
-import {parseBarcode} from "@barcode_scanner/js/barcode_parser.esm";
+} from "@barcode_gs1/utils/gs1_nomenclature.esm";
+import {parseBarcode} from "@barcode_scanner/utils/barcode_parser.esm";
 
 // FNC1 (<GS>, 0x1D), the separator a scanner sends between variable-length AIs.
 const GS = String.fromCharCode(29);

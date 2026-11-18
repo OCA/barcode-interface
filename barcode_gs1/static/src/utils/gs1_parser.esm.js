@@ -1,11 +1,12 @@
-import {barcodeParsers} from "@barcode_scanner/js/registries.esm";
 import {
     compileGs1Rule,
     getGs1Nomenclature,
     hasValidCheckDigit,
-} from "@barcode_gs1/js/gs1_nomenclature.esm";
+} from "./gs1_nomenclature.esm";
+import {barcodeParsers} from "@barcode_scanner/registries.esm";
 
-const GS1_SEPARATOR = String.fromCharCode(29); // FNC1 (<GS>, 0x1D)
+// FNC1 (<GS>, 0x1D)
+const GS1_SEPARATOR = String.fromCharCode(29);
 
 // The symbology identifiers the GS1 carriers prefix their data with: GS1-128,
 // DataBar, GS1 DataMatrix, GS1 QR and GS1 DotCode. Their presence is itself

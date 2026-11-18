@@ -1,5 +1,5 @@
-import {barcodeStartupTasks} from "@barcode_scanner/js/registries.esm";
-import {loadGs1Nomenclature} from "@barcode_gs1/js/gs1_nomenclature.esm";
+import {barcodeStartupTasks} from "@barcode_scanner/registries.esm";
+import {loadGs1Nomenclature} from "./gs1_nomenclature.esm";
 
 /**
  * Read the GS1 nomenclature once, when the app starts, so the parser — which
