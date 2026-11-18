@@ -1,13 +1,13 @@
-import "@barcode_stock_partner_delivery_zone/js/picking_info_delivery_zone.esm";
+// Import "@barcode_stock_partner_delivery_zone/js/picking_info_delivery_zone.esm";
 import {
     NO_ZONE,
     NO_ZONE_GROUP,
     UNKNOWN_ZONE_GROUP,
     ZONE,
-} from "@barcode_stock_partner_delivery_zone/js/picking_list_delivery_zone.esm";
+} from "@barcode_stock_partner_delivery_zone/components/picking_list_screen/picking_list_screen.esm";
 import {beforeEach, describe, expect, test} from "@odoo/hoot";
-import {PickingInfoTab} from "@barcode_stock/js/components/picking_info_tab.esm";
-import {PickingListScreen} from "@barcode_stock/js/screens/picking_list_screen.esm";
+import {PickingInfoTab} from "@barcode_stock/components/picking_info_tab/picking_info_tab.esm";
+import {PickingListScreen} from "@barcode_stock/components/picking_list_screen/picking_list_screen.esm";
 import {getTemplate} from "@web/core/templates";
 import {patchTranslations} from "@web/../tests/web_test_helpers";
 

@@ -1,4 +1,4 @@
-import {PickingListScreen} from "@barcode_stock/js/screens/picking_list_screen.esm";
+import {PickingListScreen} from "@barcode_stock/components/picking_list_screen/picking_list_screen.esm";
 import {_t} from "@web/core/l10n/translation";
 import {onWillStart} from "@odoo/owl";
 import {patch} from "@web/core/utils/patch";

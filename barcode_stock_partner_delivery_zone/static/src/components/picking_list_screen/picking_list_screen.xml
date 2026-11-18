@@ -35,6 +35,7 @@
         </xpath>
     </t>
 
+
     <!-- The operation's delivery zone on its card. -->
     <t
         t-name="barcode_stock_partner_delivery_zone.GroupRenderer"
@@ -55,49 +56,4 @@
             </t>
         </xpath>
     </t>
-
-    <!-- Delivery zone in the operation's Information tab, changeable. -->
-    <t
-        t-name="barcode_stock_partner_delivery_zone.PickingInfoTab"
-        t-inherit="barcode_scanner.PickingInfoTab"
-        t-inherit-mode="extension"
-    >
-        <xpath
-            expr="//div[hasclass('ilx-kw-card')]/div[hasclass('ilx-kw-info-row')][1]"
-            position="after"
-        >
-            <div class="ilx-kw-info-row mt-3">
-                <div class="ilx-kw-icon-box-small ilx-kw-bg-purple-light">
-                    <i class="fa fa-map-signs" />
-                </div>
-                <div class="ilx-kw-info-text w-100">
-                    <span class="ilx-kw-eyebrow">Delivery Zone</span>
-                    <div class="ilx-kw-select-wrapper mt-1">
-                        <select
-                            class="ilx-kw-select"
-                            t-att-disabled="zoneState.saving or zoneState.failed"
-                            t-on-change="onDeliveryZoneChange"
-                        >
-                            <option
-                                value=""
-                                t-att-selected="!zoneState.zone"
-                            >No zone</option>
-                            <t
-                                t-foreach="deliveryZoneOptions"
-                                t-as="zone"
-                                t-key="zone.id"
-                            >
-                                <option
-                                    t-att-value="zone.id"
-                                    t-att-selected="isDeliveryZoneSelected(zone)"
-                                    t-esc="zone.name"
-                                />
-                            </t>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </xpath>
-    </t>
-
 </templates>

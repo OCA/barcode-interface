@@ -12,10 +12,9 @@
         "partner_delivery_zone",
     ],
     "assets": {
-        "web.assets_backend": [
-            "barcode_stock_partner_delivery_zone/static/src/xml/delivery_zone_templates.xml",
-            "barcode_stock_partner_delivery_zone/static/src/js/picking_list_delivery_zone.esm.js",
-            "barcode_stock_partner_delivery_zone/static/src/js/picking_info_delivery_zone.esm.js",
+        "barcode_scanner.assets": [
+            "barcode_stock_partner_delivery_zone/static/src/**/*.esm.js",
+            "barcode_stock_partner_delivery_zone/static/src/**/*.xml",
         ],
         "web.assets_unit_tests": [
             "barcode_stock_partner_delivery_zone/static/tests/**/*",

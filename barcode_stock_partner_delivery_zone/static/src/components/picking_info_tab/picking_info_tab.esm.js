@@ -1,8 +1,8 @@
 import {onWillStart, useState} from "@odoo/owl";
-import {PickingInfoTab} from "@barcode_stock/js/components/picking_info_tab.esm";
+import {PickingInfoTab} from "@barcode_stock/components/picking_info_tab/picking_info_tab.esm";
 import {_t} from "@web/core/l10n/translation";
 import {patch} from "@web/core/utils/patch";
-import {useBarcodeScanner} from "@barcode_scanner/js/hooks/use_inventory.esm";
+import {useBarcodeScanner} from "@barcode_scanner/hooks/use_inventory.esm";
 
 /**
  * Show the operation's delivery zone in its Information tab and let the
