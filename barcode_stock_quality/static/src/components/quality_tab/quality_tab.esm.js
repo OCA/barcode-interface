@@ -1,6 +1,6 @@
 import {Component, onWillStart, useState} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
-import {useBarcodeScanner} from "@barcode_scanner/js/hooks/use_inventory.esm";
+import {useBarcodeScanner} from "@barcode_scanner/hooks/use_inventory.esm";
 import {user} from "@web/core/user";
 
 /**

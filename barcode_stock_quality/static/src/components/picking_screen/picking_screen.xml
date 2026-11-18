@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <!--
+        Add a "Quality" tab to the reception screen for incoming pickings,
+        without touching barcode_stock: the tab button and its content are
+        injected into the inherited PickingScreen template.
+    -->
+    <t
+        t-name="barcode_stock_quality.PickingScreenQuality"
+        t-inherit="barcode_scanner.PickingScreen"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//div[hasclass('ilx-kw-tabs')]" position="inside">
+            <button
+                t-if="state.pickingTypeCode === 'incoming'"
+                t-att-class="state.activeTab === 'quality' ? 'ilx-kw-tab active' : 'ilx-kw-tab'"
+                t-on-click="() => this.setTab('quality')"
+            >
+                <i class="fa fa-check-square-o me-1" /> Quality
+                <div
+                t-if="state.activeTab === 'quality'"
+                class="ilx-kw-tab-indicator"
+            />
+            </button>
+        </xpath>
+        <xpath expr="//div[hasclass('ilx-kw-main-spacer')]" position="before">
+            <t t-if="state.activeTab === 'quality'">
+                <QualityTab pickingId="state.picking.id" answers="qualityAnswers" />
+            </t>
+        </xpath>
+    </t>
+</templates>

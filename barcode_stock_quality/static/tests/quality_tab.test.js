@@ -1,7 +1,7 @@
 import {beforeEach, describe, expect, test} from "@odoo/hoot";
 import {patchTranslations, patchWithCleanup} from "@web/../tests/web_test_helpers";
-import {PickingScreen} from "@barcode_stock/js/screens/picking_screen.esm";
-import {QualityTab} from "@barcode_stock_quality/js/components/quality_tab.esm";
+import {PickingScreen} from "@barcode_stock/components/picking_screen/picking_screen.esm";
+import {QualityTab} from "@barcode_stock_quality/components/quality_tab/quality_tab.esm";
 import {getTemplate} from "@web/core/templates";
 import {user} from "@web/core/user";
 

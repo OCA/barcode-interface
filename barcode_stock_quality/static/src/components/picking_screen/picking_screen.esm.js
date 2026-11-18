@@ -1,5 +1,5 @@
-import {PickingScreen} from "@barcode_stock/js/screens/picking_screen.esm";
-import {QualityTab} from "@barcode_stock_quality/js/components/quality_tab.esm";
+import {PickingScreen} from "@barcode_stock/components/picking_screen/picking_screen.esm";
+import {QualityTab} from "../quality_tab/quality_tab.esm";
 import {patch} from "@web/core/utils/patch";
 
 /**
