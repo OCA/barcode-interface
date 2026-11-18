@@ -1,17 +1,17 @@
 import {
     COUNTABLE_PRODUCTS,
     InventoryCountScreen,
-} from "@barcode_inventory/js/screens/inventory_count_screen.esm";
+} from "@barcode_inventory/components/inventory_count_screen/inventory_count_screen.esm";
 import {beforeEach, describe, expect, test} from "@odoo/hoot";
 import {
     makeMockEnv,
     patchTranslations,
     patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
-import {InventoryLocationScreen} from "@barcode_inventory/js/screens/inventory_location_screen.esm";
-import {InventoryProductSelectorScreen} from "@barcode_inventory/js/screens/inventory_product_selector_screen.esm";
+import {InventoryLocationScreen} from "@barcode_inventory/components/inventory_location_screen/inventory_location_screen.esm";
+import {InventoryProductSelectorScreen} from "@barcode_inventory/components/inventory_product_selector_screen/inventory_product_selector_screen.esm";
 import {getTemplate} from "@web/core/templates";
-import {parseBarcode} from "@barcode_scanner/js/barcode_parser.esm";
+import {parseBarcode} from "@barcode_scanner/utils/barcode_parser.esm";
 import {user} from "@web/core/user";
 
 const UNTRACKED = {

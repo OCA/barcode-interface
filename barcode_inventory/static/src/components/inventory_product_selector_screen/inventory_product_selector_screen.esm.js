@@ -1,13 +1,13 @@
 import {
     COUNTABLE_PRODUCTS,
     notStorableMessage,
-} from "@barcode_inventory/js/screens/inventory_count_screen.esm";
+} from "../inventory_count_screen/inventory_count_screen.esm";
 import {Component, onWillStart, useState} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
-import {barcodeMatchDomain} from "@barcode_scanner/js/utils/scan_match.esm";
-import {barcodeScreens} from "@barcode_scanner/js/registries.esm";
-import {useBarcodeHandler} from "@barcode_scanner/js/hooks/use_barcode_handler.esm";
-import {useBarcodeScanner} from "@barcode_scanner/js/hooks/use_inventory.esm";
+import {barcodeMatchDomain} from "@barcode_scanner/utils/scan_match.esm";
+import {barcodeScreens} from "@barcode_scanner/registries.esm";
+import {useBarcodeHandler} from "@barcode_scanner/hooks/use_barcode_handler.esm";
+import {useBarcodeScanner} from "@barcode_scanner/hooks/use_inventory.esm";
 import {useService} from "@web/core/utils/hooks";
 
 /**

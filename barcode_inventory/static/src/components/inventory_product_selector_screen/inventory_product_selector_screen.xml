@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_inventory.InventoryProductSelectorScreen">
+        <div class="ilx-emp-v2-screen">
+            <header class="ilx-emp-v2-header">
+                <button class="ilx-emp-v2-back-btn" t-on-click="goBack">
+                    <i class="fa fa-arrow-left" />
+                </button>
+                <h1 class="ilx-emp-v2-header-title">Add Product</h1>
+            </header>
+
+            <main class="ilx-emp-v2-main">
+                <div class="ilx-emp-v2-search-box">
+                    <i class="fa fa-search ilx-emp-v2-search-icon" />
+                    <input
+                        type="text"
+                        class="ilx-emp-v2-search-input"
+                        placeholder="Scan or search a product..."
+                        t-att-value="state.search"
+                        t-on-input="onSearchInput"
+                    />
+                </div>
+
+                <h2 class="ilx-emp-v2-section-title">PRODUCTS</h2>
+                <div class="ilx-emp-v2-list">
+                    <t t-if="state.loading">
+                        <div class="text-center p-4">Loading products...</div>
+                    </t>
+                    <t t-else="">
+                        <t t-foreach="state.results" t-as="prod" t-key="prod.id">
+                            <div
+                                class="ilx-emp-v2-card"
+                                t-on-click="() => this.pickProduct(prod)"
+                            >
+                                <div class="ilx-emp-v2-info">
+                                    <span class="ilx-emp-v2-name">
+                                        <t t-esc="prod.display_name" />
+                                    </span>
+                                </div>
+                                <div class="ilx-emp-v2-status">
+                                    <i
+                                        class="fa fa-plus-circle ilx-emp-v2-icon-chevron"
+                                    />
+                                </div>
+                            </div>
+                        </t>
+                        <div
+                            t-if="state.results.length === 0"
+                            class="text-center p-4"
+                            style="color: #666;"
+                        >No products found.</div>
+                    </t>
+                </div>
+            </main>
+        </div>
+    </t>
+
+</templates>

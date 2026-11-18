@@ -1,0 +1,18 @@
+// Difference between the counted quantity and the stock, under the count.
+.ilx-inv-diff {
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    &.ilx-inv-diff-up {
+        color: var(--ilx-success);
+    }
+
+    &.ilx-inv-diff-down {
+        color: var(--ilx-error);
+    }
+
+    &.ilx-inv-diff-none {
+        color: var(--ilx-on-surface-variant);
+        font-weight: normal;
+    }
+}

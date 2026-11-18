@@ -1,5 +1,5 @@
 import {_t} from "@web/core/l10n/translation";
-import {barcodeMenuTiles} from "@barcode_scanner/js/registries.esm";
+import {barcodeMenuTiles} from "@barcode_scanner/registries.esm";
 
 /**
  * Home-screen tile for inventory adjustments. Registers into the scanner core
