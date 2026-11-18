@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_purchase.PurchaseProductSelectorScreen">
+        <div class="ilx-emp-v2-screen">
+            <header class="ilx-emp-v2-header">
+                <button class="ilx-emp-v2-back-btn" t-on-click="goBack">
+                    <i class="fa fa-arrow-left" />
+                </button>
+                <h1 class="ilx-emp-v2-header-title">Add Product</h1>
+                <div style="width: 48px;" />
+            </header>
+
+            <main class="ilx-emp-v2-main">
+                <div class="ilx-emp-v2-search-box">
+                    <i class="fa fa-search ilx-emp-v2-search-icon" />
+                    <input
+                        type="text"
+                        class="ilx-emp-v2-search-input"
+                        placeholder="Search by name or reference..."
+                        t-model="state.search"
+                    />
+                </div>
+
+                <h2 class="ilx-emp-v2-section-title">PRODUCTS</h2>
+
+                <div class="ilx-emp-v2-list">
+                    <t t-if="state.loading">
+                        <div class="text-center p-4">Loading products...</div>
+                    </t>
+                    <t t-else="">
+                        <t
+                            t-foreach="filteredProducts"
+                            t-as="product"
+                            t-key="product.id"
+                        >
+                            <div
+                                class="ilx-emp-v2-card"
+                                t-on-click="() => this.confirmSelection(product)"
+                            >
+                                <div class="ilx-emp-v2-avatar-wrapper">
+                                    <div class="ilx-emp-v2-avatar">
+                                        <t t-if="product.image_url">
+                                            <img
+                                                t-att-src="product.image_url"
+                                                t-on-error="() => this.onImageError(product)"
+                                            />
+                                        </t>
+                                        <t t-else="">
+                                            <div class="ilx-emp-v2-avatar-placeholder">
+                                                <i class="fa fa-cube" />
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="ilx-emp-v2-info">
+                                    <span class="ilx-emp-v2-name">
+                                        <t t-esc="product.display_name" />
+                                    </span>
+                                    <span class="ilx-emp-v2-role">
+                                        <t t-esc="product.default_code || ''" />
+                                    </span>
+                                </div>
+                                <div class="ilx-emp-v2-status">
+                                    <i
+                                        class="fa fa-plus-circle ilx-emp-v2-icon-chevron"
+                                    />
+                                </div>
+                            </div>
+                        </t>
+                        <div
+                            t-if="filteredProducts.length === 0"
+                            class="text-center p-4 ilx-empty-text"
+                        >
+                            No products found.
+                        </div>
+                    </t>
+                </div>
+            </main>
+        </div>
+    </t>
+</templates>

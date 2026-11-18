@@ -2,9 +2,9 @@ import {
     PRODUCT_FIELDS,
     PURCHASABLE_PRODUCTS,
     PurchaseScreen,
-} from "@barcode_purchase/js/screens/purchase_screen.esm";
+} from "@barcode_purchase/components/purchase_screen/purchase_screen.esm";
 import {beforeEach, describe, expect, test} from "@odoo/hoot";
-import {PurchaseProductSelectorScreen} from "@barcode_purchase/js/screens/product_selector_screen.esm";
+import {PurchaseProductSelectorScreen} from "@barcode_purchase/components/product_selector_screen/product_selector_screen.esm";
 import {patchTranslations} from "@web/../tests/web_test_helpers";
 
 // Units of measure as a database holds them; a dozen is a twelfth of a unit.

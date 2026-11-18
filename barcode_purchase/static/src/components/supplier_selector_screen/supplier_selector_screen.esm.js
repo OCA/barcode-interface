@@ -1,10 +1,10 @@
-import {barcodeScreens} from "@barcode_scanner/js/registries.esm";
+import {barcodeScreens} from "@barcode_scanner/registries.esm";
 import {Component, onWillStart, useState} from "@odoo/owl";
 import {useService} from "@web/core/utils/hooks";
-import {useBarcodeScanner} from "@barcode_scanner/js/hooks/use_inventory.esm";
-import {useBarcodeHandler} from "@barcode_scanner/js/hooks/use_barcode_handler.esm";
-import {barcodeMatchDomain} from "@barcode_scanner/js/utils/scan_match.esm";
-import {recordImageUrl} from "@barcode_purchase/js/utils/avatar.esm";
+import {useBarcodeScanner} from "@barcode_scanner/hooks/use_inventory.esm";
+import {useBarcodeHandler} from "@barcode_scanner/hooks/use_barcode_handler.esm";
+import {barcodeMatchDomain} from "@barcode_scanner/utils/scan_match.esm";
+import {recordImageUrl} from "../../utils/avatar.esm";
 
 // `bin_size` keeps the images themselves off the wire -- see recordImageUrl.
 const AVATAR_FIELDS = ["name", "image_128", "city", "country_id", "write_date"];

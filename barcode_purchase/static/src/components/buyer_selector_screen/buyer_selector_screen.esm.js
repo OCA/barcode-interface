@@ -1,9 +1,9 @@
-import {barcodeScreens} from "@barcode_scanner/js/registries.esm";
+import {barcodeScreens} from "@barcode_scanner/registries.esm";
 import {Component, onWillStart, useState} from "@odoo/owl";
 import {useService} from "@web/core/utils/hooks";
-import {useBarcodeScanner} from "@barcode_scanner/js/hooks/use_inventory.esm";
-import {useBarcodeHandler} from "@barcode_scanner/js/hooks/use_barcode_handler.esm";
-import {recordImageUrl} from "@barcode_purchase/js/utils/avatar.esm";
+import {useBarcodeScanner} from "@barcode_scanner/hooks/use_inventory.esm";
+import {useBarcodeHandler} from "@barcode_scanner/hooks/use_barcode_handler.esm";
+import {recordImageUrl} from "../../utils/avatar.esm";
 
 /**
  * Pick the buyer for a purchase order -- Odoo's native `user_id` on

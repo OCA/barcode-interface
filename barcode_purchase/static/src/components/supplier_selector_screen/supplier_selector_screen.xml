@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_purchase.SupplierSelectorScreen">
+        <div class="ilx-emp-v2-screen">
+            <header class="ilx-emp-v2-header">
+                <button class="ilx-emp-v2-back-btn" t-on-click="goBack">
+                    <i class="fa fa-arrow-left" />
+                </button>
+                <h1 class="ilx-emp-v2-header-title">Select Supplier</h1>
+                <div style="width: 48px;" />
+            </header>
+
+            <main class="ilx-emp-v2-main">
+                <div class="ilx-emp-v2-search-box">
+                    <i class="fa fa-search ilx-emp-v2-search-icon" />
+                    <input
+                        type="text"
+                        class="ilx-emp-v2-search-input"
+                        placeholder="Search by name or city..."
+                        t-model="state.search"
+                    />
+                </div>
+
+                <h2 class="ilx-emp-v2-section-title">VENDORS</h2>
+
+                <div class="ilx-emp-v2-list">
+                    <t t-if="state.loading">
+                        <div class="text-center p-4">Loading suppliers...</div>
+                    </t>
+                    <t t-else="">
+                        <t t-foreach="filteredSuppliers" t-as="sup" t-key="sup.id">
+                            <div
+                                t-att-class="state.selectedSupplier?.id === sup.id ? 'ilx-emp-v2-card selected' : 'ilx-emp-v2-card'"
+                                t-on-click="() => this.selectSupplier(sup)"
+                            >
+                                <div class="ilx-emp-v2-avatar-wrapper">
+                                    <div class="ilx-emp-v2-avatar">
+                                        <t t-if="sup.image_url">
+                                            <img
+                                                t-att-src="sup.image_url"
+                                                t-on-error="() => this.onImageError(sup)"
+                                            />
+                                        </t>
+                                        <t t-else="">
+                                            <div class="ilx-emp-v2-avatar-placeholder">
+                                                <t
+                                                    t-esc="sup.name.charAt(0).toUpperCase()"
+                                                />
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="ilx-emp-v2-info">
+                                    <span class="ilx-emp-v2-name">
+                                        <t t-esc="sup.name" />
+                                    </span>
+                                    <span class="ilx-emp-v2-role">
+                                        <t t-esc="sup.city || ''" />
+                                    </span>
+                                </div>
+                                <div class="ilx-emp-v2-status">
+                                    <t t-if="state.selectedSupplier?.id === sup.id">
+                                        <i
+                                            class="fa fa-check-circle ilx-emp-v2-icon-selected"
+                                        />
+                                    </t>
+                                    <t t-else="">
+                                        <i
+                                            class="fa fa-chevron-right ilx-emp-v2-icon-chevron"
+                                        />
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                        <div
+                            t-if="filteredSuppliers.length === 0"
+                            class="text-center p-4 ilx-empty-text"
+                        >
+                            No suppliers found.
+                        </div>
+                    </t>
+                </div>
+            </main>
+
+            <footer class="ilx-emp-v2-footer">
+                <button
+                    t-att-class="!state.selectedSupplier ? 'ilx-emp-v2-confirm-btn disabled' : 'ilx-emp-v2-confirm-btn'"
+                    t-on-click="confirmSelection"
+                >
+                    Confirm Supplier
+                </button>
+            </footer>
+        </div>
+    </t>
+</templates>

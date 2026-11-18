@@ -1,13 +1,13 @@
 import {
     PRODUCT_FIELDS,
     PURCHASABLE_PRODUCTS,
-} from "@barcode_purchase/js/screens/purchase_screen.esm";
+} from "../purchase_screen/purchase_screen.esm";
 import {Component, onWillStart, useState} from "@odoo/owl";
-import {barcodeMatchAnyDomain} from "@barcode_scanner/js/utils/scan_match.esm";
-import {barcodeScreens} from "@barcode_scanner/js/registries.esm";
-import {recordImageUrl} from "@barcode_purchase/js/utils/avatar.esm";
-import {useBarcodeHandler} from "@barcode_scanner/js/hooks/use_barcode_handler.esm";
-import {useBarcodeScanner} from "@barcode_scanner/js/hooks/use_inventory.esm";
+import {barcodeMatchAnyDomain} from "@barcode_scanner/utils/scan_match.esm";
+import {barcodeScreens} from "@barcode_scanner/registries.esm";
+import {recordImageUrl} from "../../utils/avatar.esm";
+import {useBarcodeHandler} from "@barcode_scanner/hooks/use_barcode_handler.esm";
+import {useBarcodeScanner} from "@barcode_scanner/hooks/use_inventory.esm";
 import {useService} from "@web/core/utils/hooks";
 
 /**

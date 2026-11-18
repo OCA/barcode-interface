@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_purchase.PurchaseScreen">
+        <div class="ilx-po-v2-screen">
+            <header class="ilx-po-v2-header">
+                <button class="ilx-po-v2-back-btn" t-on-click="goBack">
+                    <i class="fa fa-arrow-left" />
+                </button>
+                <h1 class="ilx-po-v2-header-title">Create Purchase Order</h1>
+                <div style="width: 48px;" />
+            </header>
+
+            <main class="ilx-po-v2-main">
+                <div class="ilx-po-v2-card">
+                    <div class="ilx-po-v2-field-group">
+                        <label class="ilx-po-v2-label">VENDOR</label>
+                        <div class="ilx-po-v2-input-box" t-on-click="selectSupplier">
+                            <i class="fa fa-building-o ilx-po-v2-input-icon" />
+                            <span class="ilx-po-v2-input-text">
+                                <t t-if="state.supplier">
+                                    <t t-esc="state.supplier.name" />
+                                </t>
+                                <t t-else="">Select supplier</t>
+                            </span>
+                            <i class="fa fa-chevron-down ilx-po-v2-input-chevron" />
+                        </div>
+                    </div>
+
+                    <div class="ilx-po-v2-grid-2">
+                        <div class="ilx-po-v2-field-group">
+                            <label class="ilx-po-v2-label">DESTINATION</label>
+                            <div
+                                class="ilx-po-v2-input-box"
+                                t-on-click="selectDestinationLocation"
+                            >
+                                <i class="fa fa-map-marker ilx-po-v2-input-icon" />
+                                <span class="ilx-po-v2-input-text">
+                                    <t t-if="state.destinationLocation">
+                                        <t
+                                            t-esc="state.destinationLocation.display_name"
+                                        />
+                                    </t>
+                                    <t t-else="">Select location</t>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ilx-po-v2-field-group">
+                            <label class="ilx-po-v2-label">BUYER</label>
+                            <div class="ilx-po-v2-input-box" t-on-click="selectBuyer">
+                                <i class="fa fa-user-o ilx-po-v2-input-icon" />
+                                <span class="ilx-po-v2-input-text">
+                                    <t t-if="state.buyer">
+                                        <t t-esc="state.buyer.name" />
+                                    </t>
+                                    <t t-else="">Select buyer</t>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ilx-po-v2-field-group" style="margin-bottom: 0;">
+                        <label class="ilx-po-v2-label">VENDOR REFERENCE</label>
+                        <div class="ilx-po-v2-input-box">
+                            <input
+                                class="ilx-po-v2-raw-input"
+                                type="text"
+                                placeholder="e.g. PO-2023-001"
+                                t-model="state.vendorRef"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ilx-po-v2-lines-header">
+                    <span
+                        class="ilx-po-v2-label"
+                        style="margin: 0; font-size: 0.8rem;"
+                    >ORDER LINES</span>
+                    <div class="ilx-po-v2-badge"><t
+                        t-esc="state.lines.length"
+                    /> ITEMS</div>
+                </div>
+
+                <div class="ilx-po-v2-lines-container">
+                    <t
+                        t-foreach="state.lines"
+                        t-as="line"
+                        t-key="line.product_id + '_' + (line.lot_name || '')"
+                    >
+                        <div class="ilx-po-v2-line-card">
+                            <div class="ilx-po-v2-line-top">
+                                <div class="ilx-po-v2-line-title">
+                                    <h4>
+                                        <t t-esc="line.product_name" />
+                                    </h4>
+                                    <span class="ilx-po-v2-sku">SKU: <t
+                                        t-esc="line.default_code || 'N/A'"
+                                    /></span>
+                                </div>
+                                <button
+                                    class="ilx-po-v2-delete"
+                                    t-on-click="() => this.removeLine(line)"
+                                >
+                                    <i class="fa fa-trash-o" />
+                                </button>
+                            </div>
+
+                            <div class="ilx-po-v2-line-table">
+                                <div class="ilx-po-v2-col">
+                                    <span class="ilx-po-v2-col-header">QTY</span>
+                                    <input
+                                        class="ilx-po-v2-col-val ilx-po-v2-input-inline"
+                                        type="number"
+                                        min="0"
+                                        step="any"
+                                        t-model.number="line.qty"
+                                        t-att-readonly="line.tracking === 'serial' and line.lot_name"
+                                        t-on-change="() => this.refreshPrices()"
+                                    />
+                                    <span class="ilx-po-v2-uom" t-esc="line.uom_name" />
+                                </div>
+                                <div class="ilx-po-v2-col">
+                                    <span class="ilx-po-v2-col-header">PRICE</span>
+                                    <input
+                                        class="ilx-po-v2-col-val ilx-po-v2-input-inline"
+                                        type="number"
+                                        step="any"
+                                        min="0"
+                                        t-att-placeholder="line.price_estimate === null ? '' : line.price_estimate"
+                                        t-model.number="line.price_unit"
+                                    />
+                                </div>
+                                <div class="ilx-po-v2-col">
+                                    <span class="ilx-po-v2-col-header">LOT</span>
+                                    <span
+                                        class="ilx-po-v2-col-val"
+                                        style="font-weight: 400;"
+                                    >
+                                        <t t-esc="line.lot_name || '-'" />
+                                    </span>
+                                </div>
+                                <div
+                                    class="ilx-po-v2-col"
+                                    style="align-items: flex-end;"
+                                >
+                                    <span class="ilx-po-v2-col-header">SUBTOTAL</span>
+                                    <span class="ilx-po-v2-col-val ilx-po-v2-subtotal">
+                                        <t t-esc="lineSubtotal(line)" />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <div
+                        t-if="state.lines.length === 0"
+                        class="text-center p-4 ilx-empty-text"
+                    >
+                        No products yet. Scan or add one.
+                    </div>
+                </div>
+
+                <button class="ilx-po-v2-add-btn" t-on-click="addProduct">
+                    <i class="fa fa-plus-circle" /> ADD PRODUCT
+                </button>
+
+                <div class="ilx-po-v2-checkbox-wrapper">
+                    <input
+                        type="checkbox"
+                        id="auto_validate"
+                        class="ilx-po-v2-checkbox"
+                        t-model="state.autoValidate"
+                    />
+                    <label
+                        for="auto_validate"
+                        class="ilx-po-v2-checkbox-label"
+                    >Validate automatically</label>
+                </div>
+            </main>
+
+            <footer class="ilx-po-v2-footer">
+                <button class="ilx-po-v2-draft-btn" t-on-click="() => this.saveDraft()">
+                    <i class="fa fa-save" /> Save Draft
+                </button>
+                <button
+                    class="ilx-po-v2-confirm-btn"
+                    t-att-disabled="state.saving"
+                    t-on-click="() => this.createPurchase()"
+                >
+                    <i class="fa fa-check-circle-o" /> CONFIRM ORDER
+                </button>
+            </footer>
+        </div>
+    </t>
+</templates>

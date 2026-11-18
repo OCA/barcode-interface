@@ -1,12 +1,12 @@
 import {
     barcodeMatchAnyDomain,
     barcodeMatchDomain,
-} from "@barcode_scanner/js/utils/scan_match.esm";
+} from "@barcode_scanner/utils/scan_match.esm";
 import {Component, onWillStart, useState} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
-import {barcodeScreens} from "@barcode_scanner/js/registries.esm";
-import {useBarcodeHandler} from "@barcode_scanner/js/hooks/use_barcode_handler.esm";
-import {useBarcodeScanner} from "@barcode_scanner/js/hooks/use_inventory.esm";
+import {barcodeScreens} from "@barcode_scanner/registries.esm";
+import {useBarcodeHandler} from "@barcode_scanner/hooks/use_barcode_handler.esm";
+import {useBarcodeScanner} from "@barcode_scanner/hooks/use_inventory.esm";
 import {roundPrecision} from "@web/core/utils/numbers";
 import {useService} from "@web/core/utils/hooks";
 

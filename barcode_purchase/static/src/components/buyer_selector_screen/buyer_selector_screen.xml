@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_purchase.BuyerSelectorScreen">
+        <div class="ilx-emp-v2-screen">
+            <header class="ilx-emp-v2-header">
+                <button class="ilx-emp-v2-back-btn" t-on-click="goBack">
+                    <i class="fa fa-arrow-left" />
+                </button>
+                <h1 class="ilx-emp-v2-header-title">Select Buyer</h1>
+                <div style="width: 48px;" />
+            </header>
+
+            <main class="ilx-emp-v2-main">
+                <div class="ilx-emp-v2-search-box">
+                    <i class="fa fa-search ilx-emp-v2-search-icon" />
+                    <input
+                        type="text"
+                        class="ilx-emp-v2-search-input"
+                        placeholder="Search by name or login..."
+                        t-model="state.search"
+                    />
+                </div>
+
+                <h2 class="ilx-emp-v2-section-title">USERS</h2>
+
+                <div class="ilx-emp-v2-list">
+                    <t t-if="state.loading">
+                        <div class="text-center p-4">Loading users...</div>
+                    </t>
+                    <t t-else="">
+                        <t t-foreach="filteredUsers" t-as="user" t-key="user.id">
+                            <div
+                                t-att-class="state.selectedUser?.id === user.id ? 'ilx-emp-v2-card selected' : 'ilx-emp-v2-card'"
+                                t-on-click="() => this.selectUser(user)"
+                            >
+                                <div class="ilx-emp-v2-avatar-wrapper">
+                                    <div class="ilx-emp-v2-avatar">
+                                        <t t-if="user.image_url">
+                                            <img
+                                                t-att-src="user.image_url"
+                                                t-on-error="() => this.onImageError(user)"
+                                            />
+                                        </t>
+                                        <t t-else="">
+                                            <div class="ilx-emp-v2-avatar-placeholder">
+                                                <t
+                                                    t-esc="user.name.charAt(0).toUpperCase()"
+                                                />
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="ilx-emp-v2-info">
+                                    <span class="ilx-emp-v2-name">
+                                        <t t-esc="user.name" />
+                                    </span>
+                                    <span class="ilx-emp-v2-role">
+                                        <t t-esc="user.login || ''" />
+                                    </span>
+                                </div>
+                                <div class="ilx-emp-v2-status">
+                                    <t t-if="state.selectedUser?.id === user.id">
+                                        <i
+                                            class="fa fa-check-circle ilx-emp-v2-icon-selected"
+                                        />
+                                    </t>
+                                    <t t-else="">
+                                        <i
+                                            class="fa fa-chevron-right ilx-emp-v2-icon-chevron"
+                                        />
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                        <div
+                            t-if="filteredUsers.length === 0"
+                            class="text-center p-4 ilx-empty-text"
+                        >
+                            No users found.
+                        </div>
+                    </t>
+                </div>
+            </main>
+
+            <footer class="ilx-emp-v2-footer">
+                <button
+                    t-att-class="!state.selectedUser ? 'ilx-emp-v2-confirm-btn disabled' : 'ilx-emp-v2-confirm-btn'"
+                    t-on-click="confirmSelection"
+                >
+                    Confirm Buyer
+                </button>
+            </footer>
+        </div>
+    </t>
+</templates>
