@@ -1,6 +1,6 @@
 import {roundDecimals, roundPrecision} from "@web/core/utils/numbers";
-import {BarcodeScannerState} from "@barcode_stock/js/services/barcode_scanner_state.esm";
-import {barcodeStartupTasks} from "@barcode_scanner/js/registries.esm";
+import {BarcodeScannerState} from "@barcode_stock/services/barcode_scanner_state.esm";
+import {barcodeStartupTasks} from "@barcode_scanner/registries.esm";
 import {patch} from "@web/core/utils/patch";
 
 // Logistic measures (AI 330n-349n: the gross weight, dimensions and volume of
