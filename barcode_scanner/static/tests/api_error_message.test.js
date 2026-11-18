@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
 import {describe, expect, test} from "@odoo/hoot";
-import {errorMessage} from "@barcode_scanner/js/api.esm";
+import {errorMessage} from "@barcode_scanner/services/api_service.esm";
 
 describe("BarcodeScanner", () => {
     test("shows the server message for user-facing exceptions", () => {

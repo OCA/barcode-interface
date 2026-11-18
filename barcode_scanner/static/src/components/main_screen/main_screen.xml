@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
-    <t t-name="barcode_scanner.App">
-        <div class="barcode-app-root">
-            <t t-if="currentScreen">
-                <t t-component="currentScreen.component" t-props="currentScreenProps" />
-            </t>
-            <div
-                t-if="feedback.flash.active"
-                t-att-class="`barcode-feedback-flash barcode-feedback-flash--${feedback.flash.level}`"
-                t-att-data-token="feedback.flash.token"
-            />
-            <t t-foreach="appWidgets" t-as="widget" t-key="widget_index">
-                <t t-component="widget.component" />
-            </t>
-        </div>
-    </t>
-
     <t t-name="barcode_scanner.MainScreen">
         <div class="ilx-home-screen">
             <header class="ilx-home-header">

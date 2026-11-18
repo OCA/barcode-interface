@@ -1,4 +1,4 @@
-import {barcodeParsers} from "@barcode_scanner/js/registries.esm";
+import {barcodeParsers} from "../registries.esm";
 
 /**
  * Built-in EAN13 parser. Registered last (high sequence) so it acts as the

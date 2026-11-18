@@ -1,4 +1,4 @@
-import {useBarcode} from "@barcode_scanner/js/hooks/use_barcode.esm";
+import {useBarcode} from "./use_barcode.esm";
 
 export function useBarcodeHandler({onScan}) {
     useBarcode((ev) => {

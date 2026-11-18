@@ -1,5 +1,5 @@
 import {describe, expect, test} from "@odoo/hoot";
-import {BarcodeScannerFeedbackService} from "@barcode_scanner/js/services/feedback_service.esm";
+import {BarcodeScannerFeedbackService} from "@barcode_scanner/services/feedback_service.esm";
 
 function makeFeedback(notifications) {
     const feedback = new BarcodeScannerFeedbackService({

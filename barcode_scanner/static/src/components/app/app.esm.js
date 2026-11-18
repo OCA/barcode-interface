@@ -2,13 +2,11 @@ import {Component, onMounted, onWillStart, onWillUnmount, useState} from "@odoo/
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
 
-import "@barcode_scanner/js/services/feedback_service.esm";
-
 import {
     barcodeAppWidgets,
     barcodeScreens,
     barcodeStartupTasks,
-} from "@barcode_scanner/js/registries.esm";
+} from "../../registries.esm";
 
 export class BarcodeScannerApp extends Component {
     setup() {
@@ -19,7 +17,7 @@ export class BarcodeScannerApp extends Component {
         if (!this.router.currentRoute) {
             this.router.navigate("main");
         }
-        onWillStart(() => this.runStartupTasks());
+        onWillStart(async () => this.runStartupTasks());
         // Capture scans (incl. Android IME/soft-input PDAs) only while the app
         // is open, so it never steals focus on the rest of the back office.
         onMounted(() => this.barcode.activate());
@@ -63,4 +61,6 @@ export class BarcodeScannerApp extends Component {
 
 BarcodeScannerApp.template = "barcode_scanner.App";
 
-registry.category("actions").add("barcode_scanner_app", BarcodeScannerApp);
+registry
+    .category("actions")
+    .add("barcode_scanner_app", BarcodeScannerApp, {force: true});

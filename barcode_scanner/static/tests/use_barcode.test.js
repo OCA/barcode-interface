@@ -2,7 +2,7 @@ import {Component, useState, xml} from "@odoo/owl";
 import {describe, expect, test} from "@odoo/hoot";
 import {getService, mountWithCleanup} from "@web/../tests/web_test_helpers";
 import {animationFrame} from "@odoo/hoot-dom";
-import {useBarcode} from "@barcode_scanner/js/hooks/use_barcode.esm";
+import {useBarcode} from "@barcode_scanner/hooks/use_barcode.esm";
 
 class Reader extends Component {
     static template = xml`<div class="o-reader"/>`;

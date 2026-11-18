@@ -1,7 +1,7 @@
 import {Reactive} from "@web/core/utils/reactive";
 import {browser} from "@web/core/browser/browser";
 import {registry} from "@web/core/registry";
-import {barcodeScreens} from "@barcode_scanner/js/registries.esm";
+import {barcodeScreens} from "../registries.esm";
 
 const HISTORY_LIMIT = 50;
 

@@ -1,8 +1,8 @@
 import {useEnv} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
 import {useService} from "@web/core/utils/hooks";
-import {useBarcodeHandler} from "@barcode_scanner/js/hooks/use_barcode_handler.esm";
-import {barcodeScanHandlers} from "@barcode_scanner/js/registries.esm";
+import {useBarcodeHandler} from "./use_barcode_handler.esm";
+import {barcodeScanHandlers} from "../registries.esm";
 
 /**
  * Runs a scanned barcode through the registered scan handlers, in `sequence`
