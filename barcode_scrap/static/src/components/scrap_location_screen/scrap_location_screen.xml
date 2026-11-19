@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_scrap.ScrapLocationScreen">
+        <div class="ilx-emp-v2-screen">
+            <header class="ilx-emp-v2-header">
+                <button class="ilx-emp-v2-back-btn" t-on-click="goBack">
+                    <i class="fa fa-arrow-left" />
+                </button>
+                <h1 class="ilx-emp-v2-header-title">Scrap Products</h1>
+            </header>
+
+            <main class="ilx-emp-v2-main">
+                <div class="ilx-emp-v2-search-box">
+                    <i class="fa fa-search ilx-emp-v2-search-icon" />
+                    <input
+                        type="text"
+                        class="ilx-emp-v2-search-input"
+                        placeholder="Scan or search a location..."
+                        t-model="state.search"
+                    />
+                </div>
+
+                <h2
+                    class="ilx-emp-v2-section-title"
+                >SELECT THE LOCATION TO SCRAP FROM</h2>
+                <div class="ilx-emp-v2-list">
+                    <t t-if="state.loading">
+                        <div class="text-center p-4">Loading locations...</div>
+                    </t>
+                    <t t-else="">
+                        <t t-foreach="filteredLocations" t-as="loc" t-key="loc.id">
+                            <div
+                                class="ilx-emp-v2-card"
+                                t-on-click="() => this.selectLocation(loc)"
+                            >
+                                <div class="ilx-emp-v2-avatar-wrapper">
+                                    <div class="ilx-emp-v2-avatar">
+                                        <div
+                                            class="ilx-emp-v2-avatar-placeholder"
+                                            style="background: #EAEAEA; color: #4A2B4D; font-size: 1.2rem;"
+                                        >
+                                            <i class="fa fa-map-marker" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ilx-emp-v2-info">
+                                    <span class="ilx-emp-v2-name">
+                                        <t t-esc="loc.display_name" />
+                                    </span>
+                                </div>
+                                <div class="ilx-emp-v2-status">
+                                    <i
+                                        class="fa fa-chevron-right ilx-emp-v2-icon-chevron"
+                                    />
+                                </div>
+                            </div>
+                        </t>
+                        <div
+                            t-if="filteredLocations.length === 0"
+                            class="text-center p-4"
+                            style="color: #666;"
+                        >No internal locations found.</div>
+                    </t>
+                </div>
+            </main>
+        </div>
+    </t>
+</templates>

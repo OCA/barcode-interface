@@ -12,8 +12,8 @@
         "barcode_stock",
     ],
     "assets": {
-        "web.assets_backend": [
-            "barcode_gs1_stock/static/src/js/gs1_stock_quantity.esm.js",
+        "barcode_scanner.assets": [
+            "barcode_gs1_stock/static/src/utils/gs1_stock_quantity.esm.js",
         ],
         "web.assets_unit_tests": [
             "barcode_gs1_stock/static/tests/**/*",

@@ -150,9 +150,15 @@ Authors
 Contributors
 ------------
 
-- `Antonio David Ruban Espinal <https://github.com/antoniodavid>`__
-- `Zuzanna Elzbieta Szalaty
-  Szalaty <https://github.com/szalatyzuzanna>`__
+- `Binhex Cloud <https://www.binhex.cloud/>`__:
+
+  - `Antonio David Ruban Espinal <https://github.com/antoniodavid>`__
+  - `Zuzanna Elzbieta Szalaty
+    Szalaty <https://github.com/szalatyzuzanna>`__
+
+- `Dixmit <https://dixmit.com>`__:
+
+  - Enric Tobella
 
 Maintainers
 -----------

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_scanner.InternalTransferScreen">
+        <div class="ilx-v2-screen">
+            <header class="ilx-v2-header">
+                <button class="ilx-v2-back-btn" t-on-click="goBack">
+                    <i class="fa fa-arrow-left" />
+                </button>
+                <h1 class="ilx-v2-header-title">Internal Transfer</h1>
+                <div style="width: 40px;" />
+            </header>
+
+            <div class="ilx-v2-main">
+                <div class="ilx-v2-field-group">
+                    <div class="ilx-v2-label">ORIGIN LOCATION</div>
+                    <div
+                        class="ilx-tx-v2-select-card"
+                        t-on-click="selectOriginLocation"
+                    >
+                        <div class="ilx-tx-v2-icon">
+                            <i class="fa fa-map-marker" />
+                        </div>
+                        <div class="ilx-tx-v2-text">
+                            <t t-if="state.origin_location">
+                                <t t-esc="state.origin_location.display_name" />
+                            </t>
+                            <t t-else="">Select origin</t>
+                        </div>
+                        <div class="ilx-tx-v2-chevron">
+                            <i class="fa fa-chevron-down" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ilx-v2-field-group">
+                    <div class="ilx-v2-label">DESTINATION LOCATION</div>
+                    <div
+                        class="ilx-tx-v2-select-card"
+                        t-on-click="selectDestinationLocation"
+                    >
+                        <div class="ilx-tx-v2-icon">
+                            <i class="fa fa-sign-in" />
+                        </div>
+                        <div class="ilx-tx-v2-text">
+                            <t t-if="state.destination_location">
+                                <t t-esc="state.destination_location.display_name" />
+                            </t>
+                            <t t-else="">Select destination</t>
+                        </div>
+                        <div class="ilx-tx-v2-chevron">
+                            <i class="fa fa-chevron-down" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ilx-v2-field-group">
+                    <div class="ilx-v2-label">RESPONSIBLE</div>
+                    <div class="ilx-tx-v2-select-card" t-on-click="selectResponsible">
+                        <div class="ilx-tx-v2-icon">
+                            <i class="fa fa-user-o" />
+                        </div>
+                        <div class="ilx-tx-v2-text">
+                            <t t-if="state.responsible">
+                                <t t-esc="state.responsible.name" />
+                            </t>
+                            <t t-else="">Select responsible</t>
+                        </div>
+                        <div class="ilx-tx-v2-chevron">
+                            <i class="fa fa-chevron-down" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ilx-v2-field-group">
+                    <div class="ilx-tx-v2-section-header">
+                        <div
+                            class="ilx-v2-label"
+                            style="margin:0;"
+                        >DETAILED OPERATIONS</div>
+                        <div class="ilx-tx-v2-items-badge">
+                            <t t-esc="state.lines.length" /> ITEM<t
+                            t-if="state.lines.length !== 1"
+                        >S</t>
+                        </div>
+                    </div>
+
+                    <div class="ilx-tx-v2-lines-container">
+                        <t
+                            t-foreach="state.lines"
+                            t-as="line"
+                            t-key="line.product_id + '_' + (line.lot_id || '')"
+                        >
+                            <div class="ilx-tx-v2-line-card">
+                                <button
+                                    class="ilx-tx-v2-line-delete"
+                                    t-on-click="() => this.removeLine(line)"
+                                >
+                                    <i class="fa fa-times" />
+                                </button>
+                                <div class="ilx-tx-v2-line-top">
+                                    <div class="ilx-tx-v2-line-name">
+                                        <t t-esc="line.product_name" />
+                                    </div>
+                                    <div class="ilx-tx-v2-qty-pill">
+                                        <input
+                                            class="ilx-tx-v2-qty-input"
+                                            type="number"
+                                            t-model="line.qty"
+                                            min="1"
+                                            t-att-readonly="line.tracking === 'serial'"
+                                        />
+                                        <span class="ilx-tx-v2-qty-unit">UNITS</span>
+                                    </div>
+                                </div>
+                                <div class="ilx-tx-v2-line-lot">
+                                    <t t-if="line.tracking !== 'none'">
+                                        <select
+                                            class="ilx-tx-v2-lot-select"
+                                            t-model="line.lot_id"
+                                            t-on-change="(ev) => this.onLotChanged(line, ev)"
+                                        >
+                                            <option value="">Select lot</option>
+                                            <t
+                                                t-foreach="line.lots"
+                                                t-as="lot"
+                                                t-key="lot.id"
+                                            >
+                                                <option t-att-value="lot.id">
+                                                    <t t-esc="lot.name" />
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </t>
+                                    <t t-else="">
+                                        <i class="fa fa-tag me-1" />
+                                        <t t-esc="line.lot_name || 'No lot'" />
+                                    </t>
+                                </div>
+                                <div class="ilx-tx-v2-line-divider" />
+                                <div
+                                    class="ilx-tx-v2-line-bottom"
+                                    style="display: flex; justify-content: space-between; align-items: center;"
+                                >
+                                    <span><i class="fa fa-cube" /> Reserved: <t
+                                        t-esc="line.qty || '0.00'"
+                                    /></span>
+                                    <t t-if="line.available_qty !== undefined">
+                                        <span
+                                            t-att-style="line.is_available ? 'color: #16a34a; font-weight: 600;' : 'color: #dc2626; font-weight: 600;'"
+                                        >
+                                            <i class="fa fa-database" /> Available: <t
+                                            t-esc="line.available_qty"
+                                        />
+                                        </span>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+
+                    <button
+                        class="ilx-v2-btn-primary"
+                        style="margin-top:1rem; background: #ffffff; color: #111827; border: 1px solid #e5e7eb; box-shadow: none;"
+                        t-on-click="addProduct"
+                    >
+                        <i class="fa fa-plus" /> Add a line
+                    </button>
+                </div>
+            </div>
+
+            <footer class="ilx-v2-footer" style="display:flex; gap:1rem;">
+                <button
+                    class="ilx-v2-btn-primary"
+                    style="background: #ffffff; color: #111827; border: 1px solid #e5e7eb; box-shadow: none;"
+                    t-on-click="checkAvailability"
+                    t-att-disabled="state.isCheckingAvailability or state.isValidating"
+                >
+                    <i class="fa fa-check-square-o" />
+                    <span>CHECK</span>
+                </button>
+                <button
+                    class="ilx-v2-btn-primary"
+                    t-on-click="validateTransfer"
+                    t-att-disabled="state.isValidating or state.isCheckingAvailability"
+                >
+                    <i class="fa fa-check" />
+                    <span>VALIDATE</span>
+                </button>
+            </footer>
+        </div>
+    </t>
+</templates>

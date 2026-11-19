@@ -16,16 +16,10 @@
         "views/purchase_order_views.xml",
     ],
     "assets": {
-        "web.assets_backend": [
-            "barcode_purchase/static/src/scss/purchase.scss",
-            "barcode_purchase/static/src/xml/purchase_templates.xml",
-            "barcode_purchase/static/src/js/utils/avatar.esm.js",
-            "barcode_purchase/static/src/js/screens/supplier_selector_screen.esm.js",
-            "barcode_purchase/static/src/js/screens/buyer_selector_screen.esm.js",
-            "barcode_purchase/static/src/js/screens/location_selector_screen.esm.js",
-            "barcode_purchase/static/src/js/screens/product_selector_screen.esm.js",
-            "barcode_purchase/static/src/js/screens/purchase_screen.esm.js",
-            "barcode_purchase/static/src/js/tiles/purchase_menu_tiles.esm.js",
+        "barcode_scanner.assets": [
+            "barcode_purchase/static/src/**/*.esm.js",
+            "barcode_purchase/static/src/**/*.xml",
+            "barcode_purchase/static/src/**/*.scss",
         ],
         "web.assets_unit_tests": [
             "barcode_purchase/static/tests/**/*",

@@ -13,13 +13,10 @@
         "stock_inventory",
     ],
     "assets": {
-        "web.assets_backend": [
-            "barcode_inventory/static/src/scss/inventory.scss",
-            "barcode_inventory/static/src/xml/inventory_templates.xml",
-            "barcode_inventory/static/src/js/screens/inventory_location_screen.esm.js",
-            "barcode_inventory/static/src/js/screens/inventory_product_selector_screen.esm.js",
-            "barcode_inventory/static/src/js/screens/inventory_count_screen.esm.js",
-            "barcode_inventory/static/src/js/tiles/inventory_menu_tiles.esm.js",
+        "barcode_scanner.assets": [
+            "barcode_inventory/static/src/**/*.scss",
+            "barcode_inventory/static/src/**/*.esm.js",
+            "barcode_inventory/static/src/**/*.xml",
         ],
         "web.assets_unit_tests": [
             "barcode_inventory/static/tests/**/*",

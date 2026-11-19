@@ -11,10 +11,10 @@
         "barcode_scanner",
     ],
     "assets": {
-        "web.assets_backend": [
-            "barcode_camera/static/src/scss/barcode_camera.scss",
-            "barcode_camera/static/src/xml/camera_fab.xml",
-            "barcode_camera/static/src/js/camera_fab.esm.js",
+        "barcode_scanner.assets": [
+            "barcode_camera/static/src/components/**/*.esm.js",
+            "barcode_camera/static/src/components/**/*.xml",
+            "barcode_camera/static/src/components/**/*.scss",
         ],
         "web.assets_unit_tests": [
             "barcode_camera/static/tests/**/*",

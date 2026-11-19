@@ -1,0 +1,43 @@
+$barcode-scanner-primary: $o-brand-primary;
+$barcode-scanner-primary-container: lighten($barcode-scanner-primary, 5%);
+$barcode-scanner-on-primary: $o-white;
+
+$barcode-scanner-secondary: $o-brand-secondary;
+
+$barcode-scanner-tertiary: #685f12;
+$barcode-scanner-tertiary-container: mix($barcode-scanner-tertiary, $o-white, 60%);
+
+$barcode-scanner-surface: mix($barcode-scanner-primary, $o-white, 3%);
+$barcode-scanner-surface-container-lowest: $o-white;
+$barcode-scanner-surface-container-low: mix($barcode-scanner-primary, $o-white, 6%);
+$barcode-scanner-surface-container-high: mix($barcode-scanner-primary, $o-white, 12%);
+$barcode-scanner-on-surface: $o-gray-900;
+$barcode-scanner-on-surface-variant: $o-gray-700;
+
+$barcode-scanner-background: $barcode-scanner-surface;
+
+$barcode-scanner-outline: $o-gray-600;
+$barcode-scanner-outline-variant: $o-gray-400;
+
+$barcode-scanner-primary-dark: darken($o-brand-primary, 10%);
+$barcode-scanner-shadow: 0px 1px 4px rgba(28, 27, 31, 0.06);
+
+$barcode-scanner-error: $o-danger;
+$barcode-scanner-error-bg: mix($barcode-scanner-error, $o-white, 12%);
+$barcode-scanner-error-container: mix($barcode-scanner-error, $o-white, 20%);
+$barcode-scanner-on-error-container: darken($barcode-scanner-error, 25%);
+
+$barcode-scanner-success: $o-success;
+$barcode-scanner-success-bg: mix($barcode-scanner-success, $o-white, 12%);
+
+$barcode-scanner-warning: $o-warning;
+$barcode-scanner-warning-bg: mix($barcode-scanner-warning, $o-white, 12%);
+
+$barcode-scanner-info: $o-info;
+$barcode-scanner-info-bg: mix($barcode-scanner-info, $o-white, 12%);
+
+$barcode-scanner-radius-sm: $o-border-radius;
+$barcode-scanner-radius-default: $o-border-radius * 2;
+$barcode-scanner-radius-md: $o-border-radius * 3;
+$barcode-scanner-radius-lg: $o-border-radius * 4;
+$barcode-scanner-radius-xl: $o-border-radius * 6;

@@ -1,11 +1,11 @@
-import "@barcode_gs1_stock/js/gs1_stock_quantity.esm";
+import "@barcode_gs1_stock/utils/gs1_stock_quantity.esm";
 import {afterEach, describe, expect, test} from "@odoo/hoot";
 import {
     compileGs1Nomenclature,
     setGs1Nomenclature,
-} from "@barcode_gs1/js/gs1_nomenclature.esm";
-import {BarcodeScannerState} from "@barcode_stock/js/services/barcode_scanner_state.esm";
-import {parseGs1} from "@barcode_gs1/js/gs1_parser.esm";
+} from "@barcode_gs1/utils/gs1_nomenclature.esm";
+import {BarcodeScannerState} from "@barcode_stock/services/barcode_scanner_state.esm";
+import {parseGs1} from "@barcode_gs1/utils/gs1_parser.esm";
 
 // Units of measure as a stock database ships them: `factor` is how many of the
 // unit make one unit of its category's reference (a kilogram is 1000 grams),

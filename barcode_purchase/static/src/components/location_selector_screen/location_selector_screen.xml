@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_purchase.PurchaseLocationSelectorScreen">
+        <div class="ilx-emp-v2-screen">
+            <header class="ilx-emp-v2-header">
+                <button class="ilx-emp-v2-back-btn" t-on-click="goBack">
+                    <i class="fa fa-arrow-left" />
+                </button>
+                <h1 class="ilx-emp-v2-header-title">Select Destination</h1>
+                <div style="width: 48px;" />
+            </header>
+
+            <main class="ilx-emp-v2-main">
+                <div class="ilx-emp-v2-search-box">
+                    <i class="fa fa-search ilx-emp-v2-search-icon" />
+                    <input
+                        type="text"
+                        class="ilx-emp-v2-search-input"
+                        placeholder="Search locations..."
+                        t-model="state.search"
+                    />
+                </div>
+
+                <h2 class="ilx-emp-v2-section-title">INCOMING LOCATIONS</h2>
+
+                <div class="ilx-emp-v2-list">
+                    <t t-if="state.loading">
+                        <div class="text-center p-4">Loading locations...</div>
+                    </t>
+                    <t t-else="">
+                        <t t-foreach="filteredLocations" t-as="loc" t-key="loc.id">
+                            <div
+                                t-att-class="state.selectedLocation?.id === loc.id ? 'ilx-emp-v2-card selected' : 'ilx-emp-v2-card'"
+                                t-on-click="() => this.selectLocation(loc)"
+                            >
+                                <div class="ilx-emp-v2-avatar-wrapper">
+                                    <div class="ilx-emp-v2-avatar">
+                                        <div class="ilx-emp-v2-avatar-placeholder">
+                                            <i class="fa fa-map-marker" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ilx-emp-v2-info">
+                                    <span class="ilx-emp-v2-name">
+                                        <t t-esc="loc.display_name" />
+                                    </span>
+                                </div>
+                                <div class="ilx-emp-v2-status">
+                                    <t t-if="state.selectedLocation?.id === loc.id">
+                                        <i
+                                            class="fa fa-check-circle ilx-emp-v2-icon-selected"
+                                        />
+                                    </t>
+                                    <t t-else="">
+                                        <i
+                                            class="fa fa-chevron-right ilx-emp-v2-icon-chevron"
+                                        />
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                        <div
+                            t-if="filteredLocations.length === 0"
+                            class="text-center p-4 ilx-empty-text"
+                        >
+                            No locations found.
+                        </div>
+                    </t>
+                </div>
+            </main>
+
+            <footer class="ilx-emp-v2-footer">
+                <button
+                    t-att-class="!state.selectedLocation ? 'ilx-emp-v2-confirm-btn disabled' : 'ilx-emp-v2-confirm-btn'"
+                    t-on-click="confirmSelection"
+                >
+                    Confirm Location
+                </button>
+            </footer>
+        </div>
+    </t>
+</templates>

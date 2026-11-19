@@ -1,17 +1,17 @@
+import {Component, useState, xml} from "@odoo/owl";
+import {animationFrame, click, waitFor, waitForNone} from "@odoo/hoot-dom";
+import {describe, expect, test} from "@odoo/hoot";
 import {
     getService,
     mockService,
     mountWithCleanup,
     patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
-import {Component, useState, xml} from "@odoo/owl";
-import {animationFrame, click, waitFor, waitForNone} from "@odoo/hoot-dom";
-import {describe, expect, test} from "@odoo/hoot";
 import {BarcodeDialog} from "@web/core/barcode/barcode_dialog";
-import {CameraFab} from "@barcode_camera/js/camera_fab.esm";
-import {barcodeAppWidgets} from "@barcode_scanner/js/registries.esm";
+import {CameraFab} from "@barcode_camera/components/camera_fab/camera_fab.esm";
+import {barcodeAppWidgets} from "@barcode_scanner/registries.esm";
 import {browser} from "@web/core/browser/browser";
-import {useBarcodeHandler} from "@barcode_scanner/js/hooks/use_barcode_handler.esm";
+import {useBarcodeHandler} from "@barcode_scanner/hooks/use_barcode_handler.esm";
 
 // A browser that can open the camera.
 function withCamera() {

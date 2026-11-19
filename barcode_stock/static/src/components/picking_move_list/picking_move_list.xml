@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_scanner.PickingMoveList" owl="1">
+        <t t-if="props.moves.length > 0">
+            <t t-foreach="props.moves" t-as="move" t-key="move.id">
+                <t t-if="showMove(move)">
+                    <PickingMoveCard
+                        move="move"
+                        moveLines="props.moveLines"
+                        stats="getMoveStats(move)"
+                        highlighted="props.highlightedMoveId === move.id"
+                        onClick="() => props.onOpenWizard(move)"
+                    />
+                </t>
+            </t>
+        </t>
+        <t t-else="">
+            <div class="ilx-kw-cta-banner" style="background: var(--ilx-success-bg);">
+                <i
+                    class="fa fa-check-circle ilx-kw-cta-icon"
+                    style="color: var(--ilx-success);"
+                />
+                <div class="ilx-kw-cta-text">
+                    <strong
+                        style="color: var(--ilx-success);"
+                    >All operations completed</strong>
+                    <span
+                        style="color: var(--ilx-on-surface-variant);"
+                    >There are no pending products for this picking.</span>
+                </div>
+            </div>
+        </t>
+    </t>
+</templates>

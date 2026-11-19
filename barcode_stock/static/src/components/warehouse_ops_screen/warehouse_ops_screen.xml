@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="barcode_scanner.WarehouseOps">
+        <div class="ilx-stitch-screen">
+            <header class="ilx-stitch-header">
+                <button class="ilx-stitch-menu-btn" t-on-click="goBack">
+                    <i class="fa fa-arrow-left" />
+                </button>
+                <h2
+                    class="ilx-stitch-header-title text-center flex-1 color-primary-container"
+                >Warehouse Operations</h2>
+                <div class="header-spacer" />
+            </header>
+
+            <main class="ilx-stitch-main">
+                <div class="ilx-stitch-location">
+                    <div class="ilx-stitch-select-wrapper">
+                        <i class="fa fa-home ilx-stitch-loc-icon" />
+                        <select
+                            name="warehouse_id"
+                            class="ilx-stitch-select"
+                            t-ref="warehouseSelect"
+                            t-att-value="state.selectedWarehouseId"
+                            t-on-change="selectWarehouse"
+                        >
+                            <t t-foreach="state.warehouses" t-as="w" t-key="w.id">
+                                <option t-att-value="w.id">
+                                    <t t-esc="w.name" />
+                                </option>
+                            </t>
+                        </select>
+                        <i class="fa fa-chevron-down ilx-stitch-chevron" />
+                    </div>
+                </div>
+
+                <t t-if="selectedWarehouse">
+                    <div class="ilx-stitch-op-cards bg-transparent p-0">
+                        <button
+                            class="ilx-stitch-op-card-vertical"
+                            t-on-click="() => openPickings('incoming')"
+                        >
+                            <div class="ilx-stitch-op-icon-wrapper">
+                                <div class="ilx-stitch-op-icon bg-pink-light">
+                                    <i class="fa fa-download" />
+                                </div>
+                                <div class="ilx-stitch-badge-circle badge-dark">
+                                    <t t-esc="selectedWarehouse.receipts" />
+                                </div>
+                            </div>
+                            <h3 class="ilx-stitch-op-title-large">Receipts</h3>
+                            <p
+                                class="ilx-stitch-op-subtitle-large"
+                            >Validate incoming goods</p>
+                        </button>
+
+                        <button
+                            class="ilx-stitch-op-card-vertical"
+                            t-on-click="() => openPickings('internal')"
+                        >
+                            <div class="ilx-stitch-op-icon-wrapper">
+                                <div class="ilx-stitch-op-icon bg-gray-light">
+                                    <i class="fa fa-exchange" />
+                                </div>
+                                <div class="ilx-stitch-badge-circle badge-dark">
+                                    <t t-esc="selectedWarehouse.internal" />
+                                </div>
+                            </div>
+                            <h3
+                                class="ilx-stitch-op-title-large"
+                            >Internal Transfers</h3>
+                            <p
+                                class="ilx-stitch-op-subtitle-large"
+                            >Move stock between locations</p>
+                        </button>
+
+                        <button
+                            class="ilx-stitch-op-card-vertical"
+                            t-on-click="() => openPickings('outgoing')"
+                        >
+                            <div class="ilx-stitch-op-icon-wrapper">
+                                <div class="ilx-stitch-op-icon bg-pink-light">
+                                    <i class="fa fa-truck" />
+                                </div>
+                                <div class="ilx-stitch-badge-circle badge-dark">
+                                    <t t-esc="selectedWarehouse.delivery" />
+                                </div>
+                            </div>
+                            <h3 class="ilx-stitch-op-title-large">Delivery Orders</h3>
+                            <p
+                                class="ilx-stitch-op-subtitle-large"
+                            >Pick and ship items</p>
+                        </button>
+                    </div>
+                </t>
+            </main>
+        </div>
+    </t>
+</templates>
