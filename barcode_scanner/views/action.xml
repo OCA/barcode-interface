@@ -3,6 +3,7 @@
         <field name="name">Scanner</field>
         <field name="tag">barcode_scanner_app</field>
         <field name="target">fullscreen</field>
+        <field name="path">barcode-scanner</field>
     </record>
     <menuitem
         id="menu_barcode_scanner_root"
