@@ -1,0 +1,34 @@
+:root {
+    --ilx-surface: #{$barcode-scanner-surface};
+    --ilx-surface-container-low: #{$barcode-scanner-surface-container-low};
+    --ilx-surface-container-high: #{$barcode-scanner-surface-container-high};
+    --ilx-on-surface: #{$barcode-scanner-on-surface};
+    --ilx-on-surface-variant: #{$barcode-scanner-on-surface-variant};
+    --ilx-primary: #{$barcode-scanner-primary};
+    --ilx-primary-container: #{$barcode-scanner-primary-container};
+    --ilx-on-primary: #{$barcode-scanner-on-primary};
+    --ilx-secondary: #{$barcode-scanner-secondary};
+    --ilx-tertiary: #{$barcode-scanner-tertiary};
+    --ilx-tertiary-container: #{$barcode-scanner-tertiary-container};
+    --ilx-error: #{$barcode-scanner-error};
+    --ilx-outline: #{$barcode-scanner-outline};
+    --ilx-outline-variant: #{$barcode-scanner-outline-variant};
+    --ilx-background: #{$barcode-scanner-background};
+    --ilx-surface-container-lowest: #{$barcode-scanner-surface-container-lowest};
+    --ilx-radius-default: #{$barcode-scanner-radius-default};
+    --ilx-radius-sm: #{$barcode-scanner-radius-sm};
+    --ilx-radius-md: #{$barcode-scanner-radius-md};
+    --ilx-radius-lg: #{$barcode-scanner-radius-lg};
+    --ilx-radius-xl: #{$barcode-scanner-radius-xl};
+    --ilx-primary-dark: #{$barcode-scanner-primary-dark};
+    --ilx-shadow: #{$barcode-scanner-shadow};
+    --ilx-error-container: #{$barcode-scanner-error-container};
+    --ilx-on-error-container: #{$barcode-scanner-on-error-container};
+    --ilx-success: #{$barcode-scanner-success};
+    --ilx-success-bg: #{$barcode-scanner-success-bg};
+    --ilx-warning: #{$barcode-scanner-warning};
+    --ilx-warning-bg: #{$barcode-scanner-warning-bg};
+    --ilx-info: #{$barcode-scanner-info};
+    --ilx-info-bg: #{$barcode-scanner-info-bg};
+    --ilx-danger-bg: #{$barcode-scanner-error-bg};
+}

@@ -1,2 +1,5 @@
-* [Antonio David Ruban Espinal](https://github.com/antoniodavid)
-* [Zuzanna Elzbieta Szalaty Szalaty](https://github.com/szalatyzuzanna)
+- [Binhex Cloud](https://www.binhex.cloud/):
+  - [Antonio David Ruban Espinal](https://github.com/antoniodavid)
+  - [Zuzanna Elzbieta Szalaty Szalaty](https://github.com/szalatyzuzanna)
+- [Dixmit](https://dixmit.com):
+  - Enric Tobella

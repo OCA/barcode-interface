@@ -19,7 +19,14 @@
         "web.assets_backend": [
             "barcode_scanner/static/src/assets_backend/*.esm.js",
         ],
+        "barcode_scanner.variables": [
+            ("include", "web._assets_helpers"),
+            ("include", "web._assets_primary_variables"),
+            "barcode_scanner/static/src/scss/primary_variables.scss",
+        ],
         "barcode_scanner.assets": [
+            ("include", "barcode_scanner.variables"),
+            "barcode_scanner/static/src/scss/parameters.scss",
             "barcode_scanner/static/src/**/*.esm.js",
             "barcode_scanner/static/src/components/**/*.scss",
             "barcode_scanner/static/src/components/**/*.xml",
