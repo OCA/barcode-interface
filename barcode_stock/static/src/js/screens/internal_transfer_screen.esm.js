@@ -191,6 +191,8 @@ export class InternalTransferScreen extends Component {
             await this.addSerialLine(product, lotId, lotName);
             return;
         }
+        const lots =
+            product.tracking === "none" ? [] : await this.getProductLots(product.id);
         const existing = this.state.lines.find(
             (l) => l.product_id === product.id && l.lot_id === lotId
         );
@@ -198,14 +200,10 @@ export class InternalTransferScreen extends Component {
             // The input hands an edited quantity back as text.
             existing.qty = roundQty((parseFloat(existing.qty) || 0) + qty);
             if (existing.tracking !== "none" && !existing.lots?.length) {
-                existing.lots = [...(await this.getProductLots(product.id))];
+                existing.lots = [...lots];
             }
             return;
         }
-        const lots =
-            product.tracking === "none"
-                ? []
-                : [...(await this.getProductLots(product.id))];
         this.state.lines.push(
             ensureLineUid({
                 product_id: product.id,
@@ -214,7 +212,7 @@ export class InternalTransferScreen extends Component {
                 tracking: product.tracking,
                 lot_id: lotId,
                 lot_name: lotName,
-                lots: lots,
+                lots: [...lots],
             })
         );
     }
@@ -239,6 +237,8 @@ export class InternalTransferScreen extends Component {
      * the operator to choose the serial on, never a second unit on another.
      */
     async addSerialLine(product, lotId, lotName) {
+        const lots = await this.getProductLots(product.id);
+        // From here on there is no await: the check and the push run atomically
         if (
             lotId &&
             this.state.lines.some(
@@ -262,7 +262,7 @@ export class InternalTransferScreen extends Component {
                 tracking: product.tracking,
                 lot_id: lotId,
                 lot_name: lotName,
-                lots: [...(await this.getProductLots(product.id))],
+                lots: [...lots],
             })
         );
     }

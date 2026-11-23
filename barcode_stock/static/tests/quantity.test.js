@@ -141,13 +141,14 @@ describe("BarcodeStock", () => {
 
     test("an internal transfer line adds up scans and an edited quantity", async () => {
         const screen = Object.create(InternalTransferScreen.prototype);
+        const product = {id: 7, tracking: "none"};
         const line = {product_id: 7, lot_id: false, qty: 0.1, tracking: "none"};
         screen.state = {lines: [line]};
-        await screen.addLine({id: 7}, false, false, 0.2);
+        await screen.addLine(product, false, false, 0.2);
         expect(line.qty).toBe(0.3);
         // The input hands an edited quantity back as text.
         line.qty = "2";
-        await screen.addLine({id: 7}, false, false, 1);
+        await screen.addLine(product, false, false, 1);
         expect(line.qty).toBe(3);
     });
 });
