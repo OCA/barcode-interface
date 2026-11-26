@@ -17,6 +17,7 @@
     ],
     "assets": {
         "web.assets_backend": [
+            "barcode_scanner/static/src/components/DebugWidget/*.*",
             "barcode_scanner/static/src/scss/barcode_scanner.scss",
             "barcode_scanner/static/src/xml/barcode_scanner_templates.xml",
             "barcode_scanner/static/src/js/registries.esm.js",
